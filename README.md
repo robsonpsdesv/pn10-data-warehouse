@@ -233,3 +233,13 @@ select plano, count(*), avg(avaliacao_media) from dm_planos.vw_assinatura group 
 - `dim_plano` é sintética (tabela `public.plano` estava vazia no OLTP).
 - `dm_planos.fato_assinatura_plano` é um snapshot (1 linha por prestador);
   para histórico de trocas de plano seria necessário SCD tipo 2.
+
+## 7. Fluxo de contribuição
+
+A branch `main` **não deve receber push direto** — todas as mudanças devem
+ser propostas em uma branch separada e integradas via Pull Request
+(merge). Esta é uma convenção de equipe (o GitHub bloqueia a proteção
+técnica de branch em repositórios privados fora do plano Pro); ao tornar o
+repositório público ou migrar para um plano pago, aplicar a proteção via
+`gh api repos/<owner>/<repo>/branches/main/protection` (ou Rulesets).
+
