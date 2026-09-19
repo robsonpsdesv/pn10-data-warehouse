@@ -49,43 +49,38 @@ acima (fluxo de situações, relação 1 pedido → N orçamentos → 1 selecion
 
 O mesmo conjunto sintético (mesmos nomes, cidades, situações, valores,
 notas e datas) também foi replicado nas tabelas **transacionais do OLTP**
-(`public.pessoa/empresa/contato/endereco/usuario/agenda/pedido/
+(`pn10.pessoa/empresa/contato/endereco/usuario/agenda/pedido/
 orcamento_pedido/historico_situacao_pedido/agendamento/avaliacao_pedido/
 plano/categoria_servico_prestador`), para que a API e o DW fiquem
-sincronizados — ver `07_popular_oltp_sincronizado.sql` e
-`carga_sintetica_oltp.sql` na seção 4.
+sincronizados — ver `01_oltp_ddl.sql` e `02_oltp_carga.sql` na seção 4.
 
 ## 2. Arquitetura do DW
 
-Um schema de **dimensões conformadas** (`dw`) compartilhado por seis
-**datamarts por assunto**, cada um em seu próprio schema, contendo apenas as
-tabelas fato e views de conveniência:
+O pipeline segue três camadas, nesta ordem:
 
-| Schema | Assunto (datamart) | Fatos |
+```
+Banco transacional (OLTP)  →  DW (dimensões + fatos, mesmo schema)  →  Datamart (resumos do fato)
+```
+
+**Mudança de arquitetura em relação à primeira versão:** antes, o schema
+`dw` continha só as dimensões conformadas e cada datamart (`dm_*`) guardava
+sua própria cópia das tabelas fato. Agora as tabelas **fato ficam no mesmo
+schema `dw` das dimensões** (esquema estrela convencional, único), e os
+schemas `dm_*` passam a conter apenas **tabelas de resumo/agregação**
+(rollups) construídas a partir dos fatos do `dw` — não há mais grão fino
+nos datamarts.
+
+| Schema | Papel | Conteúdo |
 |---|---|---|
-| `dw` | Dimensões conformadas | — |
-| `dm_pedidos` | Ciclo de vida operacional dos pedidos | `fato_pedido`, `fato_historico_situacao_pedido` |
-| `dm_orcamentos` | Orçamentos/propostas comerciais | `fato_orcamento` |
-| `dm_avaliacoes` | Satisfação do cliente / reputação | `fato_avaliacao` |
-| `dm_agendamentos` | Agenda e execução do atendimento | `fato_agendamento` |
-| `dm_prestadores` | Perfil e precificação dos prestadores | `fato_precificacao_categoria` |
-| `dm_planos` | Assinaturas e planos comerciais | `fato_assinatura_plano` |
+| `dw` | Data Warehouse | Todas as dimensões (`dim_*`) e todos os fatos (`fato_*`) |
+| `dm_pedidos` | Datamart | Resumos de `dw.fato_pedido` |
+| `dm_orcamentos` | Datamart | Resumos de `dw.fato_orcamento` |
+| `dm_avaliacoes` | Datamart | Resumos de `dw.fato_avaliacao` |
+| `dm_agendamentos` | Datamart | Resumos de `dw.fato_agendamento` |
+| `dm_prestadores` | Datamart | Resumos de `dw.fato_precificacao_categoria` / `dw.dim_prestador` |
+| `dm_planos` | Datamart | Resumos de `dw.fato_assinatura_plano` |
 
-### Bus Matrix (dimensões conformadas × datamarts)
-
-| Dimensão | dm_pedidos | dm_orcamentos | dm_avaliacoes | dm_agendamentos | dm_prestadores | dm_planos |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| dim_tempo | X | X | X | X | | X |
-| dim_cliente | X | X | X | X | | |
-| dim_prestador | X | X | X | X | X | X |
-| dim_cidade | X | | X | | X | |
-| dim_categoria_servico | X | X | X | | X | |
-| dim_situacao_pedido | X | | | | | |
-| dim_situacao_orcamento | | X | | | | |
-| dim_forma_pagamento | X | | | | | |
-| dim_plano | | | | | | X |
-
-### Diagrama do datamart `dm_pedidos` (estrela)
+### Diagrama do DW (fato + dimensões no mesmo schema)
 
 ```mermaid
 erDiagram
@@ -98,141 +93,132 @@ erDiagram
     FATO_PEDIDO }o--|| DIM_SITUACAO_PEDIDO : sk_situacao_pedido
     FATO_PEDIDO }o--o| DIM_FORMA_PAGAMENTO : sk_forma_pagamento
     FATO_HISTORICO_SITUACAO_PEDIDO }o--|| FATO_PEDIDO : sk_pedido
+    FATO_ORCAMENTO }o--|| FATO_PEDIDO : sk_pedido
+    FATO_ORCAMENTO }o--|| DIM_PRESTADOR : sk_prestador
+    FATO_AVALIACAO }o--|| FATO_PEDIDO : sk_pedido
+    FATO_AGENDAMENTO }o--|| FATO_PEDIDO : sk_pedido
+    FATO_PRECIFICACAO_CATEGORIA }o--|| DIM_PRESTADOR : sk_prestador
+    FATO_ASSINATURA_PLANO }o--|| DIM_PRESTADOR : sk_prestador
+    FATO_ASSINATURA_PLANO }o--|| DIM_PLANO : sk_plano
 ```
 
-### Diagrama geral dos datamarts
+### Diagrama geral do pipeline
 
 ```mermaid
 flowchart LR
-    subgraph dw [dw - dimensões conformadas]
-        DT[dim_tempo]
-        DCid[dim_cidade]
-        DCat[dim_categoria_servico]
-        DCli[dim_cliente]
-        DPre[dim_prestador]
-        DSitP[dim_situacao_pedido]
-        DSitO[dim_situacao_orcamento]
-        DFp[dim_forma_pagamento]
-        DPl[dim_plano]
+    subgraph OLTP ["pn10 (OLTP transacional)"]
+        T[pedido, orcamento_pedido, avaliacao_pedido, ...]
     end
-    subgraph dm_pedidos
-        FP[fato_pedido]
-        FH[fato_historico_situacao_pedido]
+    subgraph DW ["dw (dimensões + fatos, mesmo schema)"]
+        DIM[dim_tempo, dim_cidade, dim_categoria_servico,\ndim_cliente, dim_prestador, dim_plano, ...]
+        FATO[fato_pedido, fato_orcamento, fato_avaliacao,\nfato_agendamento, fato_precificacao_categoria,\nfato_assinatura_plano]
     end
-    subgraph dm_orcamentos
-        FO[fato_orcamento]
+    subgraph DM ["dm_* (datamarts = resumos)"]
+        RP[dm_pedidos.resumo_*]
+        RO[dm_orcamentos.resumo_*]
+        RA[dm_avaliacoes.resumo_*]
+        RAg[dm_agendamentos.resumo_*]
+        RPr[dm_prestadores.resumo_*]
+        RPl[dm_planos.resumo_*]
     end
-    subgraph dm_avaliacoes
-        FA[fato_avaliacao]
-    end
-    subgraph dm_agendamentos
-        FAg[fato_agendamento]
-    end
-    subgraph dm_prestadores
-        FPr[fato_precificacao_categoria]
-    end
-    subgraph dm_planos
-        FPl[fato_assinatura_plano]
-    end
-    dw --> dm_pedidos
-    dw --> dm_orcamentos
-    dw --> dm_avaliacoes
-    dw --> dm_agendamentos
-    dw --> dm_prestadores
-    dw --> dm_planos
-    FP --> FH
+    OLTP -->|carga sintética sincronizada| DW
+    DIM --- FATO
+    DW -->|agregação/rollup| DM
 ```
 
-## 3. Grão das tabelas fato
+## 3. Grão das tabelas fato (schema `dw`)
 
 | Tabela | Grão |
 |---|---|
-| `dm_pedidos.fato_pedido` | 1 linha por pedido |
-| `dm_pedidos.fato_historico_situacao_pedido` | 1 linha por transição de situação do pedido |
-| `dm_orcamentos.fato_orcamento` | 1 linha por orçamento enviado por um prestador |
-| `dm_avaliacoes.fato_avaliacao` | 1 linha por avaliação de pedido finalizado |
-| `dm_agendamentos.fato_agendamento` | 1 linha por agendamento de atendimento |
-| `dm_prestadores.fato_precificacao_categoria` | 1 linha por (prestador, categoria de serviço atendida) |
-| `dm_planos.fato_assinatura_plano` | 1 linha por prestador (snapshot do plano vigente) |
+| `dw.fato_pedido` | 1 linha por pedido |
+| `dw.fato_historico_situacao_pedido` | 1 linha por transição de situação do pedido |
+| `dw.fato_orcamento` | 1 linha por orçamento enviado por um prestador |
+| `dw.fato_avaliacao` | 1 linha por avaliação de pedido finalizado |
+| `dw.fato_agendamento` | 1 linha por agendamento de atendimento |
+| `dw.fato_precificacao_categoria` | 1 linha por (prestador, categoria de serviço atendida) |
+| `dw.fato_assinatura_plano` | 1 linha por prestador (snapshot do plano vigente) |
+
+### Grão das tabelas de resumo (datamarts)
+
+| Tabela | Grão |
+|---|---|
+| `dm_pedidos.resumo_pedido_mes_categoria` | 1 linha por (ano, mês, categoria de serviço, situação) |
+| `dm_pedidos.resumo_pedido_regiao` | 1 linha por região geográfica |
+| `dm_orcamentos.resumo_orcamento_prestador` | 1 linha por prestador |
+| `dm_orcamentos.resumo_orcamento_categoria` | 1 linha por categoria de serviço |
+| `dm_avaliacoes.resumo_avaliacao_categoria` | 1 linha por categoria de serviço |
+| `dm_avaliacoes.resumo_avaliacao_prestador` | 1 linha por prestador |
+| `dm_agendamentos.resumo_agendamento_mes` | 1 linha por (ano, mês) |
+| `dm_agendamentos.resumo_agendamento_prestador` | 1 linha por prestador |
+| `dm_prestadores.resumo_prestador_categoria` | 1 linha por categoria de serviço |
+| `dm_prestadores.resumo_prestador_regiao` | 1 linha por região geográfica |
+| `dm_planos.resumo_plano` | 1 linha por plano comercial |
 
 ## 4. Scripts (executar em ordem)
 
-| Arquivo | Conteúdo |
-|---|---|
-| `00_script_unificado_pn10.sql` | DDL completo do OLTP (todas as migrações Flyway `V001`–`V059` + dados dev), usado para (re)criar o schema `public` do zero em um banco novo |
-| `00_criar_schemas.sql` | Cria/recria os 7 schemas do DW |
-| `01_dimensoes_conformadas.sql` | dim_tempo, dim_cidade, dim_categoria_servico (a partir de dados mestres reais) + dim_situacao_pedido/orcamento, dim_forma_pagamento, dim_plano (a partir dos enums/regras da API) |
-| `02_dim_cliente_prestador.sql` | dim_cliente (300) e dim_prestador (120) — **sintéticos** |
-| `03_fato_pedido_orcamento_historico.sql` | fato_pedido (800), fato_historico_situacao_pedido, fato_orcamento — **sintéticos**, respeitando o fluxo de `SituacaoPedido`/`SituacaoOrcamento` |
-| `04_fato_avaliacao_agendamento.sql` | fato_avaliacao e fato_agendamento derivados do estado de cada pedido |
-| `05_fato_prestadores_planos.sql` | fato_precificacao_categoria, fato_assinatura_plano + atualização da reputação em dim_prestador |
-| `06_views_analiticas.sql` | Views `vw_*` que já resolvem os joins fato+dimensões de cada datamart |
-| `07_popular_oltp_sincronizado.sql` | Popula as tabelas transacionais do **OLTP** (`public.*`) a partir dos dados já gerados no DW, mantendo os dois sincronizados (mesmos clientes, prestadores, pedidos, orçamentos, avaliações, agendamentos e planos) |
-| `carga_sintetica_oltp.sql` | **Carga sintética final do OLTP em INSERTs SQL puros** (sem PL/pgSQL, sem `random()`), gerada a partir do resultado do passo 07 — arquivo pronto para versionar/subir ao GitHub e para popular qualquer banco novo já com o DDL aplicado |
-| `run_all.sh` | Executa os scripts `00` a `07` acima em ordem via `psql` |
+| Ordem | Arquivo | Camada | Conteúdo |
+|---|---|---|---|
+| 1 | `01_oltp_ddl.sql` | Banco transacional | DDL completo do OLTP (todas as migrações Flyway `V001`–`V059` + dados dev); cria o schema `pn10` já no início do script (`CREATE SCHEMA pn10` + `SET search_path`) |
+| 2 | `02_oltp_carga.sql` | Banco transacional | Carga sintética do OLTP em **INSERTs SQL puros** (pessoa/empresa/contato/endereco/usuario/agenda/pedido/orcamento_pedido/historico_situacao_pedido/agendamento/avaliacao_pedido/plano/categoria_servico_prestador) |
+| 3 | `03_dw_ddl.sql` | DW | Cria o schema único `dw` com **todas as dimensões e todos os fatos juntos** |
+| 4 | `04_dw_carga.sql` | DW | Popula as dimensões (dados mestre reais + sintéticos) e os fatos (pedido, histórico, orçamento, avaliação, agendamento, precificação, assinatura) — sintéticos, respeitando o fluxo de `SituacaoPedido`/`SituacaoOrcamento` |
+| 5 | `05_datamart_ddl.sql` | Datamart | Cria os 6 schemas `dm_*`, cada um só com tabelas de **resumo/agregação** (2 por assunto) |
+| 6 | `06_datamart_carga.sql` | Datamart | ETL de agregação: `INSERT INTO ... SELECT ... GROUP BY` a partir de `dw.fato_*`/`dw.dim_*` |
 
 ### Como executar
 
+Os scripts são executados manualmente, um a um, na ordem 1→2→3→4→5→6 (não há
+script único tipo `run_all.sh` — isso é intencional, para quem for rodar
+acompanhar cada etapa):
+
 ```bash
 cd dw
-PGHOST=localhost PGPORT=5433 PGUSER=postgres PGPASSWORD=postgres PGDATABASE=prestadornota10local ./run_all.sh
+export PGHOST=localhost PGPORT=5433 PGUSER=postgres PGPASSWORD=postgres PGDATABASE=prestadornota10local
+psql -v ON_ERROR_STOP=1 -f 01_oltp_ddl.sql
+psql -v ON_ERROR_STOP=1 -f 02_oltp_carga.sql
+psql -v ON_ERROR_STOP=1 -f 03_dw_ddl.sql
+psql -v ON_ERROR_STOP=1 -f 04_dw_carga.sql
+psql -v ON_ERROR_STOP=1 -f 05_datamart_ddl.sql
+psql -v ON_ERROR_STOP=1 -f 06_datamart_carga.sql
 ```
 
-Os scripts do DW (`00` a `06`) são idempotentes: o passo `00` recria os
-schemas do zero (`DROP SCHEMA ... CASCADE`) antes de popular novamente. O
-passo `07` também é idempotente (remove a carga sintética anterior do
-`public.*`, preservando os dados mestre e os usuários de sistema
-SISTEMA/ADMIN) antes de repopular.
-
-### Carga sintética do OLTP para o GitHub
-
-Para obter (ou regenerar) a carga sintética do OLTP como **INSERTs SQL
-puros** — sem depender de PL/pgSQL, laços ou `random()` — em um banco já
-com o DDL aplicado (`00_script_unificado_pn10.sql`) e o DW carregado:
-
-1. Rode `07_popular_oltp_sincronizado.sql` (já incluso no `run_all.sh`).
-2. Exporte o resultado com a função utilitária `pn10_table_to_inserts`
-   (gera `INSERT INTO ... VALUES (...);` genérico por tabela via
-   `to_jsonb`, contornando a indisponibilidade de `pg_dump --inserts`
-   quando a versão do cliente `pg_dump` não bate com a do servidor).
-
-O arquivo final, **`carga_sintetica_oltp.sql`** (11.148 `INSERT`s + 1.357
-`UPDATE`s, ~3,4 MB), foi validado rodando do zero em um banco novo: aplicar
-primeiro `00_script_unificado_pn10.sql` e depois `carga_sintetica_oltp.sql`
-reproduz exatamente os mesmos 800 pedidos, 2.006 orçamentos, 3.163
-transições de histórico, 611 agendamentos e 407 avaliações do DW — sem
-nenhuma dependência do schema `dw`/`dm_*`. Os dois `UPDATE`s em massa no
-final do arquivo existem porque `pedido.codigo_orcamento_selecionado` e
-`pedido.codigo_agendamento` formam uma referência circular com
-`orcamento_pedido`/`agendamento` (o pedido é inserido primeiro com essas
-duas colunas em `NULL` e só depois vinculado).
+Os scripts de DDL (`01`, `03`, `05`) são idempotentes: recriam suas
+estruturas do zero (`DROP TABLE`/`DROP SCHEMA ... CASCADE`) antes de
+popular novamente.
 
 ## 5. Exemplos de consultas analíticas
 
 ```sql
--- Taxa de conversão de pedidos por situação
-select situacao, count(*) from dm_pedidos.vw_pedido group by situacao order by 2 desc;
+-- Direto no DW (join fato + dimensões)
+select sit.situacao, count(*)
+from dw.fato_pedido fp
+join dw.dim_situacao_pedido sit on sit.sk_situacao_pedido = fp.sk_situacao_pedido
+group by sit.situacao order by 2 desc;
 
--- Ticket médio por região
-select regiao, avg(valor_orcamento_selecionado) from dm_pedidos.vw_pedido group by regiao;
+-- Direto no datamart (já é um resumo, sem necessidade de join)
+select * from dm_pedidos.resumo_pedido_regiao order by qtd_pedidos desc;
 
--- Nota média por categoria de serviço
-select categoria_servico, avg(nota) from dm_avaliacoes.vw_avaliacao group by categoria_servico order by 2 desc;
+select * from dm_avaliacoes.resumo_avaliacao_categoria order by nota_media desc;
 
--- Prestadores por plano e reputação média
-select plano, count(*), avg(avaliacao_media) from dm_planos.vw_assinatura group by plano;
+select * from dm_planos.resumo_plano order by qtd_prestadores desc;
 ```
 
 ## 6. Simplificações e extensões futuras
 
 - **Pedido Fixo / Convite** (`pedido_fixo`, `convite_pedido_fixo`) não foi
-  modelado como datamart — mesmo padrão de `dm_pedidos` pode ser replicado.
-- `qtd_categorias_servico` é um atributo degenerado (contagem); o
-  relacionamento N:N pedido↔categoria não foi modelado como bridge table
-  para simplificar o grão de `fato_pedido`.
-- `dim_plano` é sintética (tabela `public.plano` estava vazia no OLTP).
-- `dm_planos.fato_assinatura_plano` é um snapshot (1 linha por prestador);
-  para histórico de trocas de plano seria necessário SCD tipo 2.
+  modelado no DW — mesmo padrão de `fato_pedido` pode ser replicado.
+- `qtd_categorias_servico` é um atributo degenerado (contagem) em
+  `dw.fato_pedido`; o relacionamento N:N pedido↔categoria não foi
+  modelado como bridge table para simplificar o grão do fato.
+- `dw.dim_plano` é sintética (tabela `pn10.plano` estava vazia no OLTP).
+- `dw.fato_assinatura_plano` é um snapshot (1 linha por prestador); para
+  histórico de trocas de plano seria necessário SCD tipo 2.
+- Os datamarts (`dm_*`) guardam apenas os resumos gerados em
+  `06_datamart_carga.sql`; para novos recortes analíticos, basta adicionar
+  uma tabela de resumo e seu `INSERT ... SELECT ... GROUP BY` a partir do
+  `dw`, sem alterar o DW.
+- Próximas etapas do pipeline (fora do escopo deste diretório): regras de
+  associação e modelos de ensemble sobre os dados do DW/datamart.
 
 ## 7. Fluxo de contribuição
 
@@ -242,4 +228,13 @@ ser propostas em uma branch separada e integradas via Pull Request
 técnica de branch em repositórios privados fora do plano Pro); ao tornar o
 repositório público ou migrar para um plano pago, aplicar a proteção via
 `gh api repos/<owner>/<repo>/branches/main/protection` (ou Rulesets).
+
+## 8. Metabase (visualização dos datamarts)
+
+O diretório [`metabase/`](metabase) sobe um container do Metabase (via
+`docker compose`) já conectado ao Postgres do projeto e expõe, em
+`metabase/views/`, uma view `vw_*` para cada tabela de resumo dos 6
+datamarts — são essas views que aparecem no catálogo de dados do
+Metabase para montar perguntas/dashboards. Ver
+[`metabase/README.md`](metabase/README.md) para instruções de uso.
 
