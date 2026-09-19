@@ -1,13 +1,15 @@
 -- =====================================================================
--- Prestador Nota 10 - Carga sintética do OLTP (schema public)
--- Gerado automaticamente a partir dos dados sintéticos do DW, sincronizados
--- entre dw/dm_* e as tabelas transacionais da API.
+-- Prestador Nota 10 - Carga sintética do OLTP (schema pn10)
+-- Passo 1 (Banco transacional) - Etapa 2/2: carga de dados sintéticos.
 --
--- Pré-requisito: DDL do OLTP já aplicado (Flyway ou dw/00_script_unificado_pn10.sql),
--- incluindo os dados mestre (cidade, estado, categoria_servico, tipo_*, banco,
--- permissao, grupo, grupo_permissao, oauth_client_details) e os usuários de
--- sistema SISTEMA(1)/ADMIN(2) inseridos pela migração V002.
+-- Pré-requisito: DDL do OLTP já aplicado (01_oltp_ddl.sql), que cria o
+-- schema `pn10` desde o início e popula os dados mestre (cidade, estado,
+-- categoria_servico, tipo_*, banco, permissao, grupo, grupo_permissao,
+-- oauth_client_details) e os usuários de sistema SISTEMA(1)/ADMIN(2)
+-- inseridos pela migração V002.
 -- =====================================================================
+
+SET search_path TO pn10;
 
 -- 1) Planos comerciais
 INSERT INTO plano (ativo, codigo, deletado, descricao, data_cadastro, data_atualizacao, limite_clientes_mensal, codigo_usuario_cadastro, codigo_usuario_atualizacao) VALUES ('true', '1', 'false', 'BASICO', '2026-09-15T21:08:43.272974+00:00', '2026-09-15T21:08:43.272974+00:00', '10', '1', '1');

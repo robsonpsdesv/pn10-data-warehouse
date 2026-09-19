@@ -4,9 +4,11 @@
 -- Execução única, na ordem correta, em um banco de dados novo/vazio.
 -- ============================================================================
 
--- ----------------------------------------------------------------------------
--- Origem: common/V001__cria-tabelas-iniciais.sql
--- ----------------------------------------------------------------------------
+CREATE SCHEMA pn10;
+COMMENT ON SCHEMA pn10 IS 'Banco de dados relacional';
+
+SET search_path TO pn10;
+
 create table usuario (
   	codigo serial primary key,
 	nome varchar(80) not null,
@@ -450,8 +452,8 @@ alter table usuario add column codigo_plano integer;
 alter table usuario add constraint fk_plano foreign key(codigo_plano) references plano(codigo);
 
 --Chaves Estrangeiras
-alter table public.usuario add CONSTRAINT usuario_codigo_pessoa_fkey FOREIGN KEY (codigo_pessoa) references pessoa(codigo);
-alter table public.usuario add CONSTRAINT usuario_codigo_empresa_fkey FOREIGN KEY (codigo_empresa) references empresa(codigo);
+alter table pn10.usuario add CONSTRAINT usuario_codigo_pessoa_fkey FOREIGN KEY (codigo_pessoa) references pessoa(codigo);
+alter table pn10.usuario add CONSTRAINT usuario_codigo_empresa_fkey FOREIGN KEY (codigo_empresa) references empresa(codigo);
 
 
 
@@ -468,12 +470,12 @@ alter table public.usuario add CONSTRAINT usuario_codigo_empresa_fkey FOREIGN KE
 insert into usuario (codigo,ativo, nome,tipo_usuario, email, senha, data_cadastro,data_atualizacao,codigo_usuario_cadastro,codigo_usuario_atualizacao)
  values(1,true,'SISTEMA','SISTEMA','system@pnota10.com.br', '$2a$10$nAT.bF2mO7IUe7PysQcL1.e9kn1OoxhKKl7/TQnmQrTVjtMPvyv9K',
 timezone('utc', now()),timezone('utc', now()),1,1);
-select nextval('public.usuario_codigo_seq');
+select nextval('pn10.usuario_codigo_seq');
 
 insert into usuario ( codigo,  ativo,nome,tipo_usuario, email, senha, data_cadastro,data_atualizacao,codigo_usuario_cadastro,codigo_usuario_atualizacao)
  values( 2,true,'Administrador','ADMIN','admin@pnota10.com.br', '$2a$10$nAT.bF2mO7IUe7PysQcL1.e9kn1OoxhKKl7/TQnmQrTVjtMPvyv9K',
 timezone('utc', now()),timezone('utc', now()),1,1);
-select nextval('public.usuario_codigo_seq');
+select nextval('pn10.usuario_codigo_seq');
 
 insert into estado(codigo,sigla,nome, data_cadastro,data_atualizacao,codigo_usuario_cadastro,codigo_usuario_atualizacao) values (1,'AC','Acre',timezone('utc', now()),timezone('utc', now()),1,1);
 insert into estado(codigo,sigla,nome, data_cadastro,data_atualizacao,codigo_usuario_cadastro,codigo_usuario_atualizacao) values (2,'AL','Alagoas',timezone('utc', now()),timezone('utc', now()),1,1);
@@ -6435,7 +6437,7 @@ create table orcamento_pedido(
 
 
 --chaves estrangeiras
-alter table public.pedido add CONSTRAINT pedido_codigo_orcamento_selecionado_fkey FOREIGN KEY (codigo_orcamento_selecionado)
+alter table pn10.pedido add CONSTRAINT pedido_codigo_orcamento_selecionado_fkey FOREIGN KEY (codigo_orcamento_selecionado)
  references orcamento_pedido(codigo);
 
 
@@ -6657,18 +6659,18 @@ create table sugestao_agendamento(
 );
 
 --chaves estrangeiras sugestao agendamento
-alter table public.sugestao_agendamento add constraint sugestao_codigo_sugestao_anterior_fkey foreign key (codigo_sugestao_anterior) references sugestao_agendamento(codigo);
- alter table public.sugestao_agendamento add constraint sugestao_codigo_sugestao_posterior_fkey foreign key (codigo_sugestao_posterior) references sugestao_agendamento(codigo);
+alter table pn10.sugestao_agendamento add constraint sugestao_codigo_sugestao_anterior_fkey foreign key (codigo_sugestao_anterior) references sugestao_agendamento(codigo);
+ alter table pn10.sugestao_agendamento add constraint sugestao_codigo_sugestao_posterior_fkey foreign key (codigo_sugestao_posterior) references sugestao_agendamento(codigo);
  
 --modifica tabela agendamento
-alter table public.agendamento add column data_inicio_agenda timestamptz ;
-alter table public.agendamento add column data_fim_agenda timestamptz;
-alter table public.agendamento add  column codigo_pedido integer not null constraint  agendamento_codigo_pedido_fk references pedido(codigo);
-alter table public.agendamento alter column codigo_agenda drop not null;
+alter table pn10.agendamento add column data_inicio_agenda timestamptz ;
+alter table pn10.agendamento add column data_fim_agenda timestamptz;
+alter table pn10.agendamento add  column codigo_pedido integer not null constraint  agendamento_codigo_pedido_fk references pedido(codigo);
+alter table pn10.agendamento alter column codigo_agenda drop not null;
 -- ----------------------------------------------------------------------------
 -- Origem: common/V021__adiciona_campo_data_cadastro_na_sugestao.sql
 -- ----------------------------------------------------------------------------
-alter table public.sugestao_agendamento add column data_cadastro timestamptz not null;
+alter table pn10.sugestao_agendamento add column data_cadastro timestamptz not null;
 -- ----------------------------------------------------------------------------
 -- Origem: common/V022__remove_campo_data_agendamento_insere_situacao_cancelado.sql
 -- ----------------------------------------------------------------------------
@@ -6794,396 +6796,396 @@ alter table pedido_categoria_servico add constraint pedido_subcategoria_servico_
 -- ----------------------------------------------------------------------------
 -- Origem: common/V035__inserir_categorias.sql
 -- ----------------------------------------------------------------------------
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(1, 'Residencial', '2022-08-12 16:38:42.583', '2022-08-14 17:22:54.898', 1, 1, NULL, false, 'Serviços residenciais', NULL);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(83, 'Automotivo', '2022-08-12 16:38:42.583', '2022-08-14 17:22:54.898', 1, 1, NULL, false, 'Serviços automotivos', NULL);
 
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(2, 'Controle de pragas', '2022-08-12 16:38:54.439', '2022-08-12 16:38:54.439', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(3, 'Climatização', '2022-08-12 16:39:04.600', '2022-08-12 16:39:04.600', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(4, 'Elétrica', '2022-08-12 16:39:11.632', '2022-08-12 16:39:11.632', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(5, 'Hidráulica', '2022-08-12 16:39:17.783', '2022-08-12 16:39:17.783', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(6, 'Computadores, Celulares e Tecnologia', '2022-08-12 16:39:28.907', '2022-08-12 16:39:28.907', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(7, 'Pintura e decorações', '2022-08-12 16:39:36.645', '2022-08-12 16:39:36.645', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(8, 'Móveis', '2022-08-12 16:39:44.467', '2022-08-12 16:39:44.467', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(9, 'Chaveiros e ferragens', '2022-08-12 16:39:52.055', '2022-08-12 16:39:52.055', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(10, 'Assistência técnica', '2022-08-12 16:40:02.196', '2022-08-12 16:40:02.196', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(11, 'Iluminação', '2022-08-12 16:40:09.214', '2022-08-12 16:40:09.214', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(12, 'Acessibilidade', '2022-08-12 16:40:14.639', '2022-08-12 16:40:14.639', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(13, 'Paisagismo e Jardins', '2022-08-12 16:40:21.629', '2022-08-12 16:40:21.629', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(14, 'Portas e janelas', '2022-08-12 16:40:27.785', '2022-08-12 16:40:27.785', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(15, 'Pisos e revestimentos', '2022-08-12 16:40:34.721', '2022-08-12 16:40:34.721', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(16, 'Matérias e insumos', '2022-08-12 16:40:43.015', '2022-08-12 16:40:43.015', 1, 1, NULL, false, NULL, 1);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(17, 'Apartamento', '2022-08-12 16:41:40.481', '2022-08-12 16:41:40.481', 1, 1, NULL, false, NULL, 2);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(18, 'Casa', '2022-08-12 16:41:52.206', '2022-08-12 16:41:52.206', 1, 1, NULL, false, NULL, 2);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(19, 'Comercial', '2022-08-12 16:41:57.869', '2022-08-12 16:41:57.869', 1, 1, NULL, false, NULL, 2);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(20, 'Ar-condicionado central/duto', '2022-08-12 16:43:05.739', '2022-08-12 16:43:05.739', 1, 1, NULL, false, NULL, 3);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(21, 'Manutenções e reparos', '2022-08-12 16:43:16.398', '2022-08-12 16:43:16.398', 1, 1, NULL, false, NULL, 3);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(22, 'Desinstalar', '2022-08-12 16:43:24.443', '2022-08-12 16:43:24.443', 1, 1, NULL, false, NULL, 3);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(23, 'Laudo técnico Ar-condicionado', '2022-08-12 16:43:33.011', '2022-08-12 16:43:33.011', 1, 1, NULL, false, NULL, 3);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(24, 'Instalar', '2022-08-12 16:43:40.208', '2022-08-12 16:43:40.208', 1, 1, NULL, false, NULL, 3);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(25, 'Visita técnica', '2022-08-12 16:43:47.421', '2022-08-12 16:43:47.421', 1, 1, NULL, false, NULL, 3);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(26, 'Chuveiro elétrico', '2022-08-12 16:44:17.449', '2022-08-12 16:44:17.449', 1, 1, NULL, false, NULL, 4);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(27, 'Ventilador', '2022-08-12 16:44:23.223', '2022-08-12 16:44:23.223', 1, 1, NULL, false, NULL, 4);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(28, 'Interfone (porteiro eletrônico)', '2022-08-12 16:44:30.101', '2022-08-12 16:44:30.101', 1, 1, NULL, false, NULL, 4);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(29, 'Instalação em geral', '2022-08-12 16:44:38.338', '2022-08-12 16:44:38.338', 1, 1, NULL, false, NULL, 4);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(30, 'Laudo técnico para raio', '2022-08-12 16:44:45.427', '2022-08-12 16:44:45.427', 1, 1, NULL, false, NULL, 4);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(31, 'Boilers', '2022-08-12 16:44:51.199', '2022-08-12 16:44:51.199', 1, 1, NULL, false, NULL, 4);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(32, 'Instalações de equipamentos', '2022-08-12 16:44:58.637', '2022-08-12 16:44:58.637', 1, 1, NULL, false, NULL, 4);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(33, 'Iluminação', '2022-08-12 16:45:04.399', '2022-08-12 16:45:04.399', 1, 1, NULL, false, NULL, 4);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(34, 'Tomadas e interruptores', '2022-08-12 16:45:10.152', '2022-08-12 16:45:10.152', 1, 1, NULL, false, NULL, 4);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(35, 'Visita técnica', '2022-08-12 16:45:17.238', '2022-08-12 16:45:17.238', 1, 1, NULL, false, NULL, 4);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(36, 'Louças e metais', '2022-08-12 16:45:59.386', '2022-08-12 16:45:59.386', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(37, 'Canos e dutos', '2022-08-12 16:46:06.642', '2022-08-12 16:46:06.642', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(38, 'Limpeza e desentupimentos', '2022-08-12 16:46:13.369', '2022-08-12 16:46:13.369', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(39, 'Ralos', '2022-08-12 16:46:19.339', '2022-08-12 16:46:19.339', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(40, 'Chuveiro elétrico', '2022-08-12 16:46:27.621', '2022-08-12 16:46:27.621', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(41, 'Caça vazamentos', '2022-08-12 16:46:35.710', '2022-08-12 16:46:35.710', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(42, 'Instalações em geral', '2022-08-12 16:46:41.931', '2022-08-12 16:46:41.931', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(43, 'Ramificações de ponto', '2022-08-12 16:46:48.282', '2022-08-12 16:46:48.282', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(44, 'Pequenos reparos', '2022-08-12 16:46:55.495', '2022-08-12 16:46:55.495', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(45, 'Caixa d''água e reservatórios', '2022-08-12 16:47:11.084', '2022-08-12 16:47:11.084', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(46, 'Lavatórios e vasos', '2022-08-12 16:47:23.611', '2022-08-12 16:47:23.611', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(47, 'Visita técnica', '2022-08-12 16:47:30.643', '2022-08-12 16:47:30.643', 1, 1, NULL, false, NULL, 5);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(48, 'Substituir peças (Notebook e Desktop)', '2022-08-12 16:48:12.729', '2022-08-12 16:48:12.729', 1, 1, NULL, false, NULL, 6);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(49, 'Instalação de software', '2022-08-12 16:48:19.802', '2022-08-12 16:48:19.802', 1, 1, NULL, false, NULL, 6);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(50, 'Impressoras', '2022-08-12 16:48:25.478', '2022-08-12 16:48:25.478', 1, 1, NULL, false, NULL, 6);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(51, 'Antivírus', '2022-08-12 16:48:31.290', '2022-08-12 16:48:31.290', 1, 1, NULL, false, NULL, 6);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(52, 'Manutenção de hardware', '2022-08-12 16:48:39.351', '2022-08-12 16:48:39.351', 1, 1, NULL, false, NULL, 6);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(53, 'Redes sem fio (wifi)', '2022-08-12 16:48:45.850', '2022-08-12 16:48:45.850', 1, 1, NULL, false, NULL, 6);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(54, 'Rede física e cabeamento', '2022-08-12 16:48:52.103', '2022-08-12 16:48:52.103', 1, 1, NULL, false, NULL, 6);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(55, 'Visita técnica', '2022-08-12 16:48:58.513', '2022-08-12 16:48:58.513', 1, 1, NULL, false, NULL, 6);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(56, 'Madeira e metal', '2022-08-12 16:49:40.434', '2022-08-12 16:49:40.434', 1, 1, NULL, false, NULL, 7);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(57, 'Textura e grafiato', '2022-08-12 16:49:46.585', '2022-08-12 16:49:46.585', 1, 1, NULL, false, NULL, 7);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(58, 'Pintura simples', '2022-08-12 16:49:53.029', '2022-08-12 16:49:53.029', 1, 1, NULL, false, NULL, 7);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(59, 'Papel de parede', '2022-08-12 16:49:59.015', '2022-08-12 16:49:59.015', 1, 1, NULL, false, NULL, 7);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(60, 'Visita técnica', '2022-08-12 16:50:05.399', '2022-08-12 16:50:05.399', 1, 1, NULL, false, NULL, 7);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(61, 'Sofá', '2022-08-12 16:50:38.747', '2022-08-12 16:50:38.747', 1, 1, NULL, false, NULL, 8);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(62, 'Reparos e marcenaria', '2022-08-12 16:50:45.468', '2022-08-12 16:50:45.468', 1, 1, NULL, false, NULL, 8);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(63, 'Armários e guarda-roupas', '2022-08-12 16:50:52.820', '2022-08-12 16:50:52.820', 1, 1, NULL, false, NULL, 8);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(64, 'Estantes, racks, nichos e quadros', '2022-08-12 16:50:59.490', '2022-08-12 16:50:59.490', 1, 1, NULL, false, NULL, 8);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(65, 'Mesas', '2022-08-12 16:51:05.467', '2022-08-12 16:51:05.467', 1, 1, NULL, false, NULL, 8);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(66, 'Camas e cabeceiras', '2022-08-12 16:51:11.626', '2022-08-12 16:51:11.626', 1, 1, NULL, false, NULL, 8);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(67, 'Espelhos', '2022-08-12 16:51:17.385', '2022-08-12 16:51:17.385', 1, 1, NULL, false, NULL, 8);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(68, 'Cadeiras, bancos e banquetas', '2022-08-12 16:51:27.508', '2022-08-12 16:51:27.508', 1, 1, NULL, false, NULL, 8);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(69, 'Visita técnica', '2022-08-12 16:51:35.022', '2022-08-12 16:51:35.022', 1, 1, NULL, false, NULL, 8);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(70, 'Chaves automotivas', '2022-08-12 16:52:13.305', '2022-08-12 16:52:13.305', 1, 1, NULL, false, NULL, 9);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(71, 'Fechaduras eletrônicas', '2022-08-12 16:52:20.412', '2022-08-12 16:52:20.412', 1, 1, NULL, false, NULL, 9);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(72, 'Chaves residenciais', '2022-08-12 16:52:27.709', '2022-08-12 16:52:27.709', 1, 1, NULL, false, NULL, 9);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(73, 'Olho mágico', '2022-08-12 16:52:34.100', '2022-08-12 16:52:34.100', 1, 1, NULL, false, NULL, 9);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(74, 'Fechaduras e miolos', '2022-08-12 16:52:40.250', '2022-08-12 16:52:40.250', 1, 1, NULL, false, NULL, 9);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(75, 'Visita técnica', '2022-08-12 16:52:47.162', '2022-08-12 16:52:47.162', 1, 1, NULL, false, NULL, 9);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(76, 'Purificadores e filtros', '2022-08-12 16:53:17.910', '2022-08-12 16:53:17.910', 1, 1, NULL, false, NULL, 10);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(77, 'Fogões, fornos e cooktops', '2022-08-12 16:53:24.371', '2022-08-12 16:53:24.371', 1, 1, NULL, false, NULL, 10);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(78, 'Janelas', '2022-08-12 16:54:28.736', '2022-08-12 16:54:28.736', 1, 1, NULL, false, NULL, 14);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(79, 'Portas', '2022-08-12 16:54:36.776', '2022-08-12 16:54:36.776', 1, 1, NULL, false, NULL, 14);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(80, 'Aplicação de revestimento', '2022-08-12 16:54:57.855', '2022-08-12 16:54:57.855', 1, 1, NULL, false, NULL, 15);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(81, 'Calheiro', '2022-08-12 16:55:04.085', '2022-08-12 16:55:04.085', 1, 1, NULL, false, NULL, 15);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(82, 'Serralheria', '2022-08-12 16:55:26.670', '2022-08-12 16:55:26.670', 1, 1, NULL, false, NULL, 16);
 
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(84, 'Revisão', '2022-09-04 17:19:38.877', '2022-09-04 17:19:38.877', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(85, 'Geometria', '2022-09-04 17:19:50.348', '2022-09-04 17:19:50.348', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(86, 'Suspensão', '2022-09-04 17:19:56.380', '2022-09-04 17:19:56.380', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(87, 'Pneus', '2022-09-04 17:20:02.698', '2022-09-04 17:20:02.698', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(88, 'Freios', '2022-09-04 17:20:08.911', '2022-09-04 17:20:08.911', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(89, 'Elétrica', '2022-09-04 17:20:15.666', '2022-09-04 17:20:15.666', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(90, 'Motor', '2022-09-04 17:20:24.466', '2022-09-04 17:20:24.466', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(91, 'Ar condicionado Automotivo', '2022-09-04 17:20:32.002', '2022-09-04 17:20:32.002', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(92, 'Transmissão', '2022-09-04 17:20:38.179', '2022-09-04 17:20:38.179', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(93, 'Diagnosticos', '2022-09-04 17:20:44.851', '2022-09-04 17:20:44.851', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(94, 'Funilaria', '2022-09-04 17:20:50.427', '2022-09-04 17:20:50.427', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(95, 'Escapamento', '2022-09-04 17:20:56.187', '2022-09-04 17:20:56.187', 1, 1, NULL, false, NULL, 83);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(96, 'Troca de Óleo de motor e filtro', '2022-09-04 17:24:11.999', '2022-09-04 17:24:11.999', 1, 1, NULL, false, NULL, 84);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(97, 'Revisão preventiva', '2022-09-04 17:24:19.459', '2022-09-04 17:24:19.459', 1, 1, NULL, false, NULL, 84);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(98, 'Problema de direção', '2022-09-04 17:24:44.320', '2022-09-04 17:24:44.320', 1, 1, NULL, false, NULL, 85);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(99, 'Balanceamento de Pneus', '2022-09-04 17:24:50.595', '2022-09-04 17:24:50.595', 1, 1, NULL, false, NULL, 85);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(100, 'Geometria da suspensão', '2022-09-04 17:24:57.477', '2022-09-04 17:24:57.477', 1, 1, NULL, false, NULL, 85);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(101, 'Troca de amortecedores', '2022-09-04 17:25:33.418', '2022-09-04 17:25:33.418', 1, 1, NULL, false, NULL, 86);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(102, 'Revisão de amortecedores', '2022-09-04 17:25:40.075', '2022-09-04 17:25:40.075', 1, 1, NULL, false, NULL, 86);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(103, 'Revisão de suspensão', '2022-09-04 17:25:53.625', '2022-09-04 17:25:53.625', 1, 1, NULL, false, NULL, 86);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(106, 'Troca de pastilhas de Freios', '2022-09-04 17:26:49.694', '2022-09-04 17:26:49.694', 1, 1, NULL, false, NULL, 88);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(107, 'Regulagem de freios', '2022-09-04 17:26:56.028', '2022-09-04 17:26:56.028', 1, 1, NULL, false, NULL, 88);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(110, 'Troca de bateria', '2022-09-04 17:27:33.291', '2022-09-04 17:27:33.291', 1, 1, NULL, false, NULL, 89);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(111, 'Problemas com alarme', '2022-09-04 17:27:39.212', '2022-09-04 17:27:39.212', 1, 1, NULL, false, NULL, 89);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(104, 'Troca de pneus', '2022-09-04 17:26:21.127', '2022-09-04 17:26:21.127', 1, 1, NULL, false, NULL, 87);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(105, 'Revisão de Freios', '2022-09-04 17:26:43.136', '2022-09-04 17:26:43.136', 1, 1, NULL, false, NULL, 88);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(108, 'Revisão Elétrica', '2022-09-04 17:27:21.210', '2022-09-04 17:27:21.210', 1, 1, NULL, false, NULL, 89);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(109, 'Regulagem de lanternas (luzes e faróis)', '2022-09-04 17:27:27.523', '2022-09-04 17:27:27.523', 1, 1, NULL, false, NULL, 89);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(112, 'Problema de Ignição (problema ao ligar o carro)', '2022-09-04 17:27:45.312', '2022-09-04 17:27:45.312', 1, 1, NULL, false, NULL, 89);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(113, 'Troca de lâmpadas (luzes e faróis)', '2022-09-04 17:27:51.354', '2022-09-04 17:27:51.354', 1, 1, NULL, false, NULL, 89);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(114, 'Troca de correia dentada', '2022-09-04 17:28:09.639', '2022-09-04 17:28:09.639', 1, 1, NULL, false, NULL, 90);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(115, 'Revisão de motor', '2022-09-04 17:28:15.796', '2022-09-04 17:28:15.796', 1, 1, NULL, false, NULL, 90);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(116, 'Troca de velas e cabos de Ignição', '2022-09-04 17:28:22.137', '2022-09-04 17:28:22.137', 1, 1, NULL, false, NULL, 90);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(117, 'Troca de filtros de ar do motor', '2022-09-04 17:28:30.778', '2022-09-04 17:28:30.778', 1, 1, NULL, false, NULL, 90);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(118, 'Troca de filtros de combustível', '2022-09-04 17:28:36.958', '2022-09-04 17:28:36.958', 1, 1, NULL, false, NULL, 90);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(119, 'Limpeza de filtro', '2022-09-04 17:29:01.705', '2022-09-04 17:29:01.705', 1, 1, NULL, false, NULL, 91);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(120, 'Troca de filtro', '2022-09-04 17:29:07.714', '2022-09-04 17:29:07.714', 1, 1, NULL, false, NULL, 91);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(121, 'Troca de gás', '2022-09-04 17:29:13.495', '2022-09-04 17:29:13.495', 1, 1, NULL, false, NULL, 91);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(125, 'Revisão de embreagem', '2022-09-04 17:31:05.189', '2022-09-04 17:31:05.189', 1, 1, NULL, false, NULL, 92);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(127, 'Problema no câmbio', '2022-09-04 17:34:02.402', '2022-09-04 17:34:02.402', 1, 1, NULL, false, NULL, 92);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(122, 'Diagnostico eletrônico/elétrico', '2022-09-04 17:29:34.905', '2022-09-04 17:29:34.905', 1, 1, NULL, false, NULL, 93);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(124, 'Conserto de amassados e arranhados', '2022-09-04 17:30:02.107', '2022-09-04 17:30:02.107', 1, 1, NULL, false, NULL, 94);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(128, 'Instalação de insulfilm', '2022-09-04 17:35:43.236', '2022-09-04 17:35:43.236', 1, 1, NULL, false, NULL, 94);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(129, 'Reparação de pintura', '2022-09-04 17:35:49.623', '2022-09-04 17:35:49.623', 1, 1, NULL, false, NULL, 94);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(130, 'Martelinho de ouro', '2022-09-04 17:35:55.362', '2022-09-04 17:35:55.362', 1, 1, NULL, false, NULL, 94);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(131, 'Troca de Escapamento', '2022-09-04 17:36:13.566', '2022-09-04 17:36:13.566', 1, 1, NULL, false, NULL, 95);
-INSERT INTO public.categoria_servico
+INSERT INTO pn10.categoria_servico
 (codigo, descricao, data_cadastro, data_atualizacao, codigo_usuario_cadastro, codigo_usuario_atualizacao, codigo_imagem, deletado, resumo, codigo_categoria_pai)
 VALUES(132, 'Revisão de escapamento', '2022-09-04 17:36:19.443', '2022-09-04 17:36:19.443', 1, 1, NULL, false, NULL, 95);
 
@@ -7489,7 +7491,7 @@ insert into banco (codigo_banco, descricao, codigo_ispb) values ('117', 'ADVANCE
 insert into banco (codigo_banco, descricao, codigo_ispb) values ('336', 'BANCO C6 S.A - C6 BANK', '28326000');
 insert into banco (codigo_banco, descricao, codigo_ispb) values ('654', 'BANCO DIGIMAIS S.A', '92874270');
 
-COMMENT ON TABLE public.banco IS 'Lista de códigos dos bancos
+COMMENT ON TABLE pn10.banco IS 'Lista de códigos dos bancos
 O Código do Banco é necessário para enviar ou receber transferências entre diferentes instituições financeiras. Exemplo: transferir dinheiro do Banco Itaú para o Bradesco; da Caixa para o Banco do Brasil, etc. O número do banco será necessário sempre que tentar fazer uma transferência via DOC (Documento de Ordem de Crédito) ou TED (Transferência Eletrônica Disponível).
 
 O código do banco possui 3 dígitos.
@@ -7549,7 +7551,7 @@ alter table pedido_fixo add constraint  forma_pagamento_check check (forma_pagam
 -- ----------------------------------------------------------------------------
 -- Origem: common/V045__cria_tabelas_dados_bancarios.sql
 -- ----------------------------------------------------------------------------
-CREATE TABLE public.dados_bancarios (
+CREATE TABLE pn10.dados_bancarios (
     codigo_usuario int4 NOT NULL,
     codigo_banco int4 NOT NULL,
     agencia varchar(20) NOT NULL,
@@ -7557,8 +7559,8 @@ CREATE TABLE public.dados_bancarios (
     tipo_conta varchar(50) NOT NULL,
     titular_conta varchar(100) NOT NULL,
     CONSTRAINT dados_bancarios_pk PRIMARY KEY (codigo_usuario, codigo_banco),
-    CONSTRAINT fk_usuario FOREIGN KEY (codigo_usuario) REFERENCES public.usuario(codigo),
-    CONSTRAINT fk_banco FOREIGN KEY (codigo_banco) REFERENCES public.banco(codigo)
+    CONSTRAINT fk_usuario FOREIGN KEY (codigo_usuario) REFERENCES pn10.usuario(codigo),
+    CONSTRAINT fk_banco FOREIGN KEY (codigo_banco) REFERENCES pn10.banco(codigo)
 );
 
 

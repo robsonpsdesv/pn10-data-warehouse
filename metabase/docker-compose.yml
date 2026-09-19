@@ -1,0 +1,29 @@
+services:
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase_pn10
+    ports:
+      - "3000:3000"
+    environment:
+      # Banco de metadados interno do próprio Metabase (independente dos dados visualizados)
+      MB_DB_TYPE: h2
+      MB_DB_FILE: /metabase-data/metabase.db
+    volumes:
+      - metabase-data:/metabase-data
+    networks:
+      - api_default
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+
+networks:
+  # Rede já criada pelo container postgres_pn10_local (jdbc:postgresql://localhost:5433/prestadornota10local)
+  api_default:
+    external: true
+
+volumes:
+  metabase-data:
