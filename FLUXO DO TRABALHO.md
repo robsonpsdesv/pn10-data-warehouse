@@ -1,6 +1,6 @@
-1) Banco transacional - Feito
-2) DW - Feito
-3) Datamart - Feito
-4) Metabase - Feito
-4) Regra de Associação - Pendente
-5) Implementar Ensemble (conjunto) - Pendente
+1) Banco transacional — Feito (`dw/01_oltp_ddl.sql`, `dw/02_oltp_carga.sql`)
+2) DW (Dimensões + Fatos) — Feito (`dw/03_dw_ddl.sql`, `dw/04_dw_carga.sql`, `dw/07_indices_dw.sql`, `dw/08_data_quality_tests.sql`)
+3) Datamart (Rollups / Agregações) — Feito (`dw/05_datamart_ddl.sql`, `dw/06_datamart_carga.sql`)
+4) Metabase (Visualização & Dashboards) — Feito (`metabase/`, views analíticas de funil e 360)
+5) Regra de Associação — Feito (`mining/associacao/regras_associacao.py`, `.ipynb`, Apriori & FP-Growth)
+6) Implementar Ensemble (conjunto) — Feito (`mining/ensemble/treinar_ensemble.py`, `.ipynb`, Random Forest, Gradient Boosting, Stacking)
