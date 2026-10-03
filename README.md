@@ -166,6 +166,7 @@ flowchart LR
 | 6 | `06_datamart_carga.sql` | Datamart | ETL de agregação: `INSERT INTO ... SELECT ... GROUP BY` a partir de `dw.fato_*`/`dw.dim_*` |
 | 7 | `07_indices_dw.sql` | Otimização DW | Índices `B-Tree` e `BRIN` nas FKs e colunas analíticas das fatos para alta performance |
 | 8 | `08_data_quality_tests.sql` | Testes / Qualidade | Testes automatizados de integridade referencial, temporal e regras de negócio |
+| 9 | `09_segmentacao_clientes_ddl.sql` | Mineração | Cria `dw.dim_cliente_segmento` (destino da clusterização de clientes), populada por `mining/clusterizacao/segmentar_clientes.py` |
 
 ### Como executar o Pipeline
 
@@ -184,27 +185,58 @@ chmod +x executar_pipeline.sh
 
 ---
 
-## 5. Módulo de Mineração de Regras de Associação (`mining/associacao/`)
+## 5. Ensemble: Clusterização de Clientes + Regras de Associação (`mining/`)
 
-Identifica padrões frequentes de serviços contratados simultaneamente através de **Market Basket Analysis**.
+Esta é a entrega central da tarefa ("Ensemble: clusterização de clientes com
+Regras de Associação"): os clientes são primeiro segmentados por
+comportamento de compra e, **só depois, as Regras de Associação são
+mineradas separadamente dentro de cada segmento** — em vez de uma lista
+genérica de regras para toda a base. Relatório técnico completo (metodologia,
+resultados, limitações):
+[`mining/RELATORIO_TECNICO.md`](mining/RELATORIO_TECNICO.md).
 
-- **Algoritmos**: `FP-Growth` e `Apriori` (via biblioteca `mlxtend`).
+Setup do ambiente Python (uma vez):
+```bash
+cd mining
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cd ..
+```
+Os comandos abaixo devem ser executados a partir da **raiz do repositório**
+(com o venv ativado).
+
+### 5.1 Clusterização de Clientes (`mining/clusterizacao/`)
+
+- **Algoritmo**: `K-Means`, com seleção de `k` por `Silhouette Score` (testado `k = 2..8`).
+- **Features**: RFM (frequência, valor, recência) + diversidade de categorias + taxa de cancelamento + nota média + tipo de pessoa + região.
+- **Saída**: grava o cluster de cada cliente em `dw.dim_cliente_segmento` (consumida pela etapa de associação) e em `mining/clusterizacao/clientes_segmentados.csv`; gera `relatorio_clusterizacao.md` e `elbow_silhouette.png`.
+- **Execução**:
+  ```bash
+  psql ... -f dw/09_segmentacao_clientes_ddl.sql   # uma vez, cria a tabela
+  python3 mining/clusterizacao/segmentar_clientes.py
+  ```
+
+### 5.2 Regras de Associação por segmento (`mining/associacao/`)
+
+- **Algoritmos**: `FP-Growth` e `Apriori` (via biblioteca `mlxtend`), executados **uma vez por segmento de cliente**.
+- **Item da cesta**: macro categoria de serviço (rollup das subcategorias finas, necessário para suporte estatístico).
 - **Métricas calculadas**: Suporte, Confiança, Lift, Alavancagem e Convicção.
 - **Execução**:
   ```bash
-  pip install -r mining/requirements.txt
-  python mining/associacao/regras_associacao.py
+  python3 mining/associacao/regras_associacao.py
   ```
-- **Notebook interativo**: [`mining/associacao/regras_associacao.ipynb`](mining/associacao/regras_associacao.ipynb)
+- Saída consolidada: `mining/associacao/regras_descobertas.csv` (coluna `Segmento`) e `relatorio_regras.md` (uma seção por segmento).
+- **Notebook de referência (versão não segmentada, mantida para fins didáticos)**: [`mining/associacao/regras_associacao.ipynb`](mining/associacao/regras_associacao.ipynb)
 
 ---
 
-## 6. Módulo de Aprendizado em Conjunto — Ensemble Learning (`mining/ensemble/`)
+## 6. Módulo complementar: Ensemble de Classificadores para Churn (`mining/ensemble/`)
 
-Classificadores de Machine Learning combinados para antecipar eventos críticos de negócio:
-
-1. **Predição de Cancelamento de Pedido (Churn)**.
-2. **Predição de Conversão / Aceite de Orçamentos**.
+**Não é o "ensemble" pedido no enunciado** (que é a combinação clusterização +
+regras de associação da seção 5) — é uma análise supervisionada adicional,
+mantida por agregar valor próprio: antecipar o **cancelamento de pedidos**
+combinando vários classificadores (ensemble de modelos, no sentido de
+bagging/boosting/stacking).
 
 - **Modelos Implementados**:
   - *Random Forest* (Bagging)
@@ -214,9 +246,10 @@ Classificadores de Machine Learning combinados para antecipar eventos críticos 
 - **Métricas avaliadas**: ROC-AUC, F1-Score, Acurácia, Precisão, Recall e Feature Importances.
 - **Execução**:
   ```bash
-  python mining/ensemble/treinar_ensemble.py
+  python3 mining/ensemble/treinar_ensemble.py
   ```
 - **Notebook interativo**: [`mining/ensemble/ensemble_learning.ipynb`](mining/ensemble/ensemble_learning.ipynb)
+- Resultado nos dados reais do DW: ROC-AUC ~0,53–0,58 (ver limitações no [relatório técnico](mining/RELATORIO_TECNICO.md), seção 6).
 
 ---
 

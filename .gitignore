@@ -1,1 +1,4 @@
 .DS_Store
+mining/.venv/
+__pycache__/
+*.pyc
