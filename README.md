@@ -158,35 +158,69 @@ flowchart LR
 
 | Ordem | Arquivo | Camada | Conteúdo |
 |---|---|---|---|
-| 1 | `01_oltp_ddl.sql` | Banco transacional | DDL completo do OLTP (todas as migrações Flyway `V001`–`V059` + dados dev); cria o schema `pn10` já no início do script (`CREATE SCHEMA pn10` + `SET search_path`) |
-| 2 | `02_oltp_carga.sql` | Banco transacional | Carga sintética do OLTP em **INSERTs SQL puros** (pessoa/empresa/contato/endereco/usuario/agenda/pedido/orcamento_pedido/historico_situacao_pedido/agendamento/avaliacao_pedido/plano/categoria_servico_prestador) |
+| 1 | `01_oltp_ddl.sql` | Banco transacional | DDL completo do OLTP (todas as migrações Flyway `V001`–`V059` + dados dev); cria o schema `pn10` |
+| 2 | `02_oltp_carga.sql` | Banco transacional | Carga sintética do OLTP em **INSERTs SQL puros** |
 | 3 | `03_dw_ddl.sql` | DW | Cria o schema único `dw` com **todas as dimensões e todos os fatos juntos** |
-| 4 | `04_dw_carga.sql` | DW | Popula as dimensões (dados mestre reais + sintéticos) e os fatos (pedido, histórico, orçamento, avaliação, agendamento, precificação, assinatura) — sintéticos, respeitando o fluxo de `SituacaoPedido`/`SituacaoOrcamento` |
-| 5 | `05_datamart_ddl.sql` | Datamart | Cria os 6 schemas `dm_*`, cada um só com tabelas de **resumo/agregação** (2 por assunto) |
+| 4 | `04_dw_carga.sql` | DW | Popula as dimensões e os fatos respeitando regras de negócio e transições |
+| 5 | `05_datamart_ddl.sql` | Datamart | Cria os 6 schemas `dm_*`, cada um só com tabelas de **resumo/agregação** |
 | 6 | `06_datamart_carga.sql` | Datamart | ETL de agregação: `INSERT INTO ... SELECT ... GROUP BY` a partir de `dw.fato_*`/`dw.dim_*` |
+| 7 | `07_indices_dw.sql` | Otimização DW | Índices `B-Tree` e `BRIN` nas FKs e colunas analíticas das fatos para alta performance |
+| 8 | `08_data_quality_tests.sql` | Testes / Qualidade | Testes automatizados de integridade referencial, temporal e regras de negócio |
 
-### Como executar
+### Como executar o Pipeline
 
-Os scripts são executados manualmente, um a um, na ordem 1→2→3→4→5→6 (não há
-script único tipo `run_all.sh` — isso é intencional, para quem for rodar
-acompanhar cada etapa):
+Você pode executar o pipeline completo de ponta a ponta com um único comando:
 
-```bash
-cd dw
-export PGHOST=localhost PGPORT=5433 PGUSER=postgres PGPASSWORD=postgres PGDATABASE=prestadornota10local
-psql -v ON_ERROR_STOP=1 -f 01_oltp_ddl.sql
-psql -v ON_ERROR_STOP=1 -f 02_oltp_carga.sql
-psql -v ON_ERROR_STOP=1 -f 03_dw_ddl.sql
-psql -v ON_ERROR_STOP=1 -f 04_dw_carga.sql
-psql -v ON_ERROR_STOP=1 -f 05_datamart_ddl.sql
-psql -v ON_ERROR_STOP=1 -f 06_datamart_carga.sql
+**No Windows (PowerShell):**
+```powershell
+.\executar_pipeline.ps1
 ```
 
-Os scripts de DDL (`01`, `03`, `05`) são idempotentes: recriam suas
-estruturas do zero (`DROP TABLE`/`DROP SCHEMA ... CASCADE`) antes de
-popular novamente.
+**No Linux/macOS (Bash):**
+```bash
+chmod +x executar_pipeline.sh
+./executar_pipeline.sh
+```
 
-## 5. Exemplos de consultas analíticas
+---
+
+## 5. Módulo de Mineração de Regras de Associação (`mining/associacao/`)
+
+Identifica padrões frequentes de serviços contratados simultaneamente através de **Market Basket Analysis**.
+
+- **Algoritmos**: `FP-Growth` e `Apriori` (via biblioteca `mlxtend`).
+- **Métricas calculadas**: Suporte, Confiança, Lift, Alavancagem e Convicção.
+- **Execução**:
+  ```bash
+  pip install -r mining/requirements.txt
+  python mining/associacao/regras_associacao.py
+  ```
+- **Notebook interativo**: [`mining/associacao/regras_associacao.ipynb`](mining/associacao/regras_associacao.ipynb)
+
+---
+
+## 6. Módulo de Aprendizado em Conjunto — Ensemble Learning (`mining/ensemble/`)
+
+Classificadores de Machine Learning combinados para antecipar eventos críticos de negócio:
+
+1. **Predição de Cancelamento de Pedido (Churn)**.
+2. **Predição de Conversão / Aceite de Orçamentos**.
+
+- **Modelos Implementados**:
+  - *Random Forest* (Bagging)
+  - *Gradient Boosting* & *AdaBoost* (Boosting)
+  - *Voting Classifier* (Ensemble por votação ponderada)
+  - *Stacking Classifier* (Meta-modelo com regressão logística)
+- **Métricas avaliadas**: ROC-AUC, F1-Score, Acurácia, Precisão, Recall e Feature Importances.
+- **Execução**:
+  ```bash
+  python mining/ensemble/treinar_ensemble.py
+  ```
+- **Notebook interativo**: [`mining/ensemble/ensemble_learning.ipynb`](mining/ensemble/ensemble_learning.ipynb)
+
+---
+
+## 7. Exemplos de consultas analíticas
 
 ```sql
 -- Direto no DW (join fato + dimensões)
@@ -198,43 +232,28 @@ group by sit.situacao order by 2 desc;
 -- Direto no datamart (já é um resumo, sem necessidade de join)
 select * from dm_pedidos.resumo_pedido_regiao order by qtd_pedidos desc;
 
-select * from dm_avaliacoes.resumo_avaliacao_categoria order by nota_media desc;
+-- Funil de Conversão analítico (Metabase View)
+select * from dm_pedidos.vw_funil_pedidos;
 
-select * from dm_planos.resumo_plano order by qtd_prestadores desc;
+-- Visão 360 do Prestador (Metabase View)
+select * from dm_prestadores.vw_performance_prestador_360 order by orcamentos_ganhos desc;
 ```
 
-## 6. Simplificações e extensões futuras
+---
 
-- **Pedido Fixo / Convite** (`pedido_fixo`, `convite_pedido_fixo`) não foi
-  modelado no DW — mesmo padrão de `fato_pedido` pode ser replicado.
-- `qtd_categorias_servico` é um atributo degenerado (contagem) em
-  `dw.fato_pedido`; o relacionamento N:N pedido↔categoria não foi
-  modelado como bridge table para simplificar o grão do fato.
-- `dw.dim_plano` é sintética (tabela `pn10.plano` estava vazia no OLTP).
-- `dw.fato_assinatura_plano` é um snapshot (1 linha por prestador); para
-  histórico de trocas de plano seria necessário SCD tipo 2.
-- Os datamarts (`dm_*`) guardam apenas os resumos gerados em
-  `06_datamart_carga.sql`; para novos recortes analíticos, basta adicionar
-  uma tabela de resumo e seu `INSERT ... SELECT ... GROUP BY` a partir do
-  `dw`, sem alterar o DW.
-- Próximas etapas do pipeline (fora do escopo deste diretório): regras de
-  associação e modelos de ensemble sobre os dados do DW/datamart.
+## 8. Metabase (visualização dos datamarts e views analíticas)
 
-## 7. Fluxo de contribuição
+O diretório [`metabase/`](metabase) sobe um container do Metabase (via `docker compose`) já conectado ao Postgres do projeto.
 
-A branch `main` **não deve receber push direto** — todas as mudanças devem
-ser propostas em uma branch separada e integradas via Pull Request
-(merge). Esta é uma convenção de equipe (o GitHub bloqueia a proteção
-técnica de branch em repositórios privados fora do plano Pro); ao tornar o
-repositório público ou migrar para um plano pago, aplicar a proteção via
-`gh api repos/<owner>/<repo>/branches/main/protection` (ou Rulesets).
+### Provisionamento Automatizado:
+- **Windows (PowerShell)**: `.\metabase\setup_metabase.ps1`
+- **Linux/macOS (Bash)**: `./metabase/setup_metabase.sh`
+- Acesse **http://localhost:3000** (Login: `admin@pn10.local` / `Pn10Metabase!2026`).
 
-## 8. Metabase (visualização dos datamarts)
+---
 
-O diretório [`metabase/`](metabase) sobe um container do Metabase (via
-`docker compose`) já conectado ao Postgres do projeto e expõe, em
-`metabase/views/`, uma view `vw_*` para cada tabela de resumo dos 6
-datamarts — são essas views que aparecem no catálogo de dados do
-Metabase para montar perguntas/dashboards. Ver
-[`metabase/README.md`](metabase/README.md) para instruções de uso.
+## 9. Fluxo de contribuição
+
+A branch `main` **não deve receber push direto** — todas as mudanças devem ser propostas em uma branch de trabalho (ex.: `branch_ivanio_pn_10_dataware`) e integradas via Pull Request.
+
 
