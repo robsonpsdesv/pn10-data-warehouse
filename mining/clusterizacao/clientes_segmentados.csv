@@ -1,0 +1,278 @@
+﻿sk_cliente,codigo_cliente,nome,tipo_pessoa,regiao,qtd_pedidos,valor_total,valor_medio_pedido,qtd_categorias_distintas,taxa_cancelamento,nota_media,recencia_dias,cluster,rotulo_segmento
+1,1,Patrícia Machado,PF,Nordeste,2,1138.16,569.08,2,0.0,5.0,544,0,Inativos / Baixo Engajamento
+2,2,Felipe Dias,PF,Nordeste,4,1169.08,292.27,4,0.25,4.171703703703703,377,1,Clientes Fiéis / Alto Valor
+3,3,Rafael Lima,PF,Nordeste,1,585.54,585.54,1,0.0,5.0,1398,0,Inativos / Baixo Engajamento
+4,4,Aline Gomes,PF,Sudeste,4,2208.68,552.17,4,0.0,4.333333333333333,196,1,Clientes Fiéis / Alto Valor
+5,5,André Rodrigues,PF,Centro-Oeste,1,0.0,0.0,1,0.0,4.171703703703703,805,0,Inativos / Baixo Engajamento
+7,7,André Duarte,PF,Nordeste,2,1784.52,892.26,2,0.5,4.171703703703703,701,0,Inativos / Baixo Engajamento
+8,8,Rafael Machado,PF,Sudeste,3,1805.02,601.6733333333333,3,0.3333333333333333,4.5,582,1,Clientes Fiéis / Alto Valor
+9,9,Beatriz Duarte,PF,Nordeste,5,3203.51,640.702,5,0.2,4.333333333333333,818,1,Clientes Fiéis / Alto Valor
+10,10,Ana Araújo,PF,Sul,1,495.88,495.88,1,1.0,4.171703703703703,572,0,Inativos / Baixo Engajamento
+11,11,Rodrigo Farias,PF,Sudeste,2,1266.01,633.005,2,0.0,3.5,857,0,Inativos / Baixo Engajamento
+12,12,Larissa Teixeira,PF,Nordeste,2,1008.73,504.365,2,0.0,3.5,552,0,Inativos / Baixo Engajamento
+13,13,Alex Barbosa,PF,Centro-Oeste,2,294.68,294.68,2,0.5,4.171703703703703,358,0,Inativos / Baixo Engajamento
+14,14,João Teixeira,PF,Sul,2,1265.38,632.69,2,0.0,3.5,224,0,Inativos / Baixo Engajamento
+15,15,Soluções Rápidas 15,PJ,Nordeste,4,1509.16,377.29,4,0.25,2.5,273,1,Clientes Fiéis / Alto Valor
+16,16,Priscila Freitas,PF,Sudeste,3,762.45,381.225,3,0.0,4.0,460,0,Inativos / Baixo Engajamento
+17,17,Obra Fácil 17,PJ,Sudeste,2,1101.56,550.78,2,0.0,2.0,672,0,Inativos / Baixo Engajamento
+18,18,Sandra Freitas,PF,Nordeste,3,791.34,395.67,3,0.0,4.171703703703703,535,0,Inativos / Baixo Engajamento
+19,19,Priscila Gomes,PF,Sudeste,2,1065.35,532.675,2,0.5,3.0,779,0,Inativos / Baixo Engajamento
+22,22,Fabiana Duarte,PF,Sudeste,5,2816.25,563.25,5,0.4,3.0,976,1,Clientes Fiéis / Alto Valor
+23,23,Thiago Duarte,PF,Sudeste,3,1574.32,524.7733333333333,3,0.3333333333333333,5.0,1329,0,Inativos / Baixo Engajamento
+24,24,Bruno Carvalho,PF,Sudeste,5,2621.09,524.218,5,0.0,4.75,552,1,Clientes Fiéis / Alto Valor
+26,26,Alex Costa,PF,Sul,3,1775.25,591.75,3,0.0,4.5,223,1,Clientes Fiéis / Alto Valor
+27,27,Thiago Teixeira,PF,Sudeste,1,605.92,605.92,1,0.0,4.171703703703703,1197,0,Inativos / Baixo Engajamento
+28,28,Bruno Costa,PF,Sul,4,1411.06,352.765,4,0.0,3.0,352,1,Clientes Fiéis / Alto Valor
+29,29,Márcio Duarte,PF,Nordeste,1,531.5,531.5,1,0.0,3.0,702,0,Inativos / Baixo Engajamento
+30,30,Renata Pereira,PF,Nordeste,2,666.31,333.155,2,0.5,5.0,547,0,Inativos / Baixo Engajamento
+31,31,Pedro Carvalho,PF,Sul,1,0.0,0.0,1,0.0,4.171703703703703,167,0,Inativos / Baixo Engajamento
+32,32,Simone Rocha,PF,Norte,1,945.16,945.16,1,0.0,1.0,1264,0,Inativos / Baixo Engajamento
+33,33,Aline Nascimento,PF,Nordeste,1,630.89,630.89,1,0.0,4.171703703703703,610,0,Inativos / Baixo Engajamento
+34,34,Maria Barbosa,PF,Nordeste,8,4569.61,571.20125,8,0.375,3.0,346,1,Clientes Fiéis / Alto Valor
+35,35,Vinícius Barbosa,PF,Sul,1,98.3,98.3,1,1.0,4.171703703703703,1388,0,Inativos / Baixo Engajamento
+36,36,Juliana Machado,PF,Sul,1,109.78,109.78,1,1.0,4.171703703703703,503,0,Inativos / Baixo Engajamento
+37,37,Ana Duarte,PF,Nordeste,4,2951.91,737.9775,4,0.0,3.0,277,1,Clientes Fiéis / Alto Valor
+38,38,Márcio Costa,PF,Nordeste,4,2108.03,527.0075,4,0.25,4.5,197,1,Clientes Fiéis / Alto Valor
+39,39,Pedro Ribeiro,PF,Nordeste,5,2315.68,578.92,5,0.2,4.666666666666667,381,1,Clientes Fiéis / Alto Valor
+40,40,Sandra Machado,PF,Nordeste,2,654.94,327.47,2,0.0,4.5,166,0,Inativos / Baixo Engajamento
+41,41,Fabiana Freitas,PF,Sudeste,3,1706.38,568.7933333333333,3,0.0,5.0,195,1,Clientes Fiéis / Alto Valor
+42,42,Gustavo Rodrigues,PF,Sudeste,1,894.7,894.7,1,0.0,5.0,1680,0,Inativos / Baixo Engajamento
+43,43,Obra Fácil 43,PJ,Nordeste,3,1214.96,404.9866666666667,3,0.0,4.0,679,0,Inativos / Baixo Engajamento
+44,44,Douglas Oliveira,PF,Centro-Oeste,1,894.31,894.31,1,0.0,5.0,1130,0,Inativos / Baixo Engajamento
+45,45,Ana Cavalcanti,PF,Sudeste,2,976.39,488.195,2,0.5,4.171703703703703,400,0,Inativos / Baixo Engajamento
+46,46,Beatriz Pereira,PF,Norte,4,2042.5,510.625,4,0.25,4.0,599,1,Clientes Fiéis / Alto Valor
+47,47,Juliana Correia,PF,Sudeste,4,2673.58,668.395,4,0.25,4.333333333333333,855,1,Clientes Fiéis / Alto Valor
+48,48,Gustavo Gomes,PF,Nordeste,1,0.0,0.0,1,0.0,4.171703703703703,1001,0,Inativos / Baixo Engajamento
+49,49,Ana Carvalho,PF,Centro-Oeste,5,991.86,247.965,5,0.4,5.0,231,1,Clientes Fiéis / Alto Valor
+51,51,Eduardo Machado,PF,Sudeste,2,872.36,436.18,2,0.0,5.0,414,0,Inativos / Baixo Engajamento
+52,52,Douglas Martins,PF,Nordeste,3,1473.06,491.02,3,0.0,5.0,207,1,Clientes Fiéis / Alto Valor
+53,53,Márcio Nascimento,PF,Sul,1,492.85,492.85,1,0.0,3.0,664,0,Inativos / Baixo Engajamento
+54,54,Soluções Rápidas 54,PJ,Nordeste,2,799.08,799.08,2,0.0,4.171703703703703,280,0,Inativos / Baixo Engajamento
+55,55,Thiago Pereira,PF,Sul,2,1019.44,509.72,2,0.5,5.0,327,0,Inativos / Baixo Engajamento
+56,56,Wesley Campos,PF,Nordeste,4,1192.41,298.1025,4,0.0,4.5,184,1,Clientes Fiéis / Alto Valor
+57,57,Eduardo Vieira,PF,Nordeste,5,2558.77,639.6925,5,0.0,5.0,414,1,Clientes Fiéis / Alto Valor
+58,58,Marcos Castro,PF,Sul,4,1763.04,440.76,4,0.25,4.333333333333333,265,1,Clientes Fiéis / Alto Valor
+59,59,Vanessa Silva,PF,Sul,5,2583.16,516.632,5,0.2,4.0,740,1,Clientes Fiéis / Alto Valor
+60,60,Beatriz Correia,PF,Sudeste,3,1203.06,401.02,3,0.0,3.3333333333333335,401,1,Clientes Fiéis / Alto Valor
+61,61,Cristina Cavalcanti,PF,Norte,2,594.89,297.445,2,0.5,3.0,1576,0,Inativos / Baixo Engajamento
+63,63,Aline Farias,PF,Sul,2,1253.21,626.605,2,0.0,4.0,296,0,Inativos / Baixo Engajamento
+64,64,Camila Martins,PF,Nordeste,3,2126.3,708.7666666666667,3,0.0,5.0,363,1,Clientes Fiéis / Alto Valor
+65,65,Pedro Souza,PF,Nordeste,2,1510.29,755.145,2,0.0,4.0,463,0,Inativos / Baixo Engajamento
+66,66,Carla Correia,PF,Nordeste,1,307.82,307.82,1,1.0,4.171703703703703,806,0,Inativos / Baixo Engajamento
+67,67,Vanessa Souza,PF,Sul,4,1510.05,377.5125,4,0.25,4.5,801,1,Clientes Fiéis / Alto Valor
+68,68,Leonardo Farias,PF,Sudeste,2,1103.21,551.605,2,0.0,5.0,571,0,Inativos / Baixo Engajamento
+69,69,Vinícius Oliveira,PF,Centro-Oeste,1,0.0,0.0,1,0.0,4.171703703703703,453,0,Inativos / Baixo Engajamento
+70,70,Gustavo Souza,PF,Centro-Oeste,5,2141.26,428.252,5,0.4,4.0,130,1,Clientes Fiéis / Alto Valor
+71,71,Bruno Dias,PF,Sudeste,2,340.91,170.455,2,0.0,4.171703703703703,436,0,Inativos / Baixo Engajamento
+72,72,Pedro Cavalcanti,PF,Norte,6,3960.1,660.0166666666667,6,0.16666666666666666,4.0,129,1,Clientes Fiéis / Alto Valor
+73,73,Juliana Farias,PF,Nordeste,2,1531.6,765.8,2,0.0,1.0,946,0,Inativos / Baixo Engajamento
+74,74,João Freitas,PF,Sul,4,2497.95,624.4875,4,0.0,4.0,191,1,Clientes Fiéis / Alto Valor
+75,75,Wesley Costa,PF,Centro-Oeste,1,909.75,909.75,1,0.0,5.0,1419,0,Inativos / Baixo Engajamento
+76,76,Tatiane Souza,PF,Nordeste,3,1148.84,574.42,3,0.0,5.0,235,1,Clientes Fiéis / Alto Valor
+77,77,Multi Serviços 77,PJ,Sul,1,439.82,439.82,1,1.0,4.171703703703703,1696,0,Inativos / Baixo Engajamento
+78,78,Felipe Dias,PF,Sudeste,2,469.32,234.66,2,0.5,4.171703703703703,247,0,Inativos / Baixo Engajamento
+79,79,Rogério Lima,PF,Nordeste,1,209.01,209.01,1,1.0,4.171703703703703,1669,0,Inativos / Baixo Engajamento
+80,80,Ana Rocha,PF,Sul,2,959.97,479.985,2,1.0,4.171703703703703,442,0,Inativos / Baixo Engajamento
+81,81,Soluções Rápidas 81,PJ,Norte,2,578.98,289.49,2,0.5,5.0,742,0,Inativos / Baixo Engajamento
+82,82,Lucas Rodrigues,PF,Centro-Oeste,1,389.23,389.23,1,0.0,4.171703703703703,849,0,Inativos / Baixo Engajamento
+83,83,Beatriz Campos,PF,Norte,2,120.11,120.11,2,0.0,4.0,246,0,Inativos / Baixo Engajamento
+85,85,André Carvalho,PF,Centro-Oeste,3,815.94,271.98,3,0.0,5.0,879,0,Inativos / Baixo Engajamento
+86,86,Alex Farias,PF,Sul,3,1720.72,573.5733333333334,3,0.3333333333333333,4.0,533,1,Clientes Fiéis / Alto Valor
+87,87,Lucas Rodrigues,PF,Nordeste,5,2368.09,473.618,5,0.2,5.0,190,1,Clientes Fiéis / Alto Valor
+88,88,Fernanda Barbosa,PF,Sul,3,1550.94,516.98,3,0.0,5.0,418,1,Clientes Fiéis / Alto Valor
+89,89,Tatiane Machado,PF,Sul,2,1264.63,632.315,2,0.0,5.0,262,0,Inativos / Baixo Engajamento
+90,90,Wesley Teixeira,PF,Sul,6,2783.43,463.905,6,0.0,4.5,536,1,Clientes Fiéis / Alto Valor
+91,91,Vinícius Silva,PF,Nordeste,1,321.47,321.47,1,1.0,4.171703703703703,304,0,Inativos / Baixo Engajamento
+92,92,Alex Pereira,PF,Sudeste,4,1774.55,591.5166666666667,3,0.25,5.0,554,1,Clientes Fiéis / Alto Valor
+94,94,Felipe Costa,PF,Sul,3,1381.6,690.8,3,0.3333333333333333,5.0,851,0,Inativos / Baixo Engajamento
+95,95,Diego Carvalho,PF,Sudeste,2,1551.34,775.67,2,0.0,5.0,560,0,Inativos / Baixo Engajamento
+96,96,Patrícia Freitas,PF,Sul,3,2043.24,681.08,3,0.0,5.0,1099,0,Inativos / Baixo Engajamento
+98,98,Pedro Santos,PF,Sul,3,1362.1,454.03333333333336,3,0.3333333333333333,5.0,327,1,Clientes Fiéis / Alto Valor
+99,99,André Souza,PF,Sul,4,1614.7,403.675,4,0.0,4.0,176,1,Clientes Fiéis / Alto Valor
+101,101,André Rocha,PF,Sudeste,4,2786.63,696.6575,4,0.0,2.0,226,1,Clientes Fiéis / Alto Valor
+102,102,João Cavalcanti,PF,Sudeste,3,1536.87,512.29,3,0.3333333333333333,3.5,1065,0,Inativos / Baixo Engajamento
+103,103,Maria Teixeira,PF,Nordeste,2,448.58,448.58,2,0.0,5.0,743,0,Inativos / Baixo Engajamento
+104,104,Lucas Rodrigues,PF,Sul,1,403.66,403.66,1,0.0,4.0,561,0,Inativos / Baixo Engajamento
+105,105,Eduardo Barbosa,PF,Norte,2,1315.65,657.825,2,0.0,5.0,1031,0,Inativos / Baixo Engajamento
+107,107,Rogério Ribeiro,PF,Sudeste,6,2267.08,453.416,6,0.0,4.0,757,1,Clientes Fiéis / Alto Valor
+109,109,Obra Fácil 109,PJ,Sul,3,2236.47,745.49,3,0.0,3.0,482,1,Clientes Fiéis / Alto Valor
+110,110,Bruno Correia,PF,Sul,8,2518.86,359.83714285714285,8,0.125,4.2,476,1,Clientes Fiéis / Alto Valor
+111,111,Serviços Express 111,PJ,Centro-Oeste,3,1638.39,546.13,3,0.3333333333333333,4.171703703703703,327,1,Clientes Fiéis / Alto Valor
+112,112,Fabiana Silva,PF,Sul,4,2805.3,701.325,4,0.25,5.0,430,1,Clientes Fiéis / Alto Valor
+113,113,Ana Freitas,PF,Nordeste,2,563.89,281.945,2,0.0,3.0,510,0,Inativos / Baixo Engajamento
+114,114,Simone Farias,PF,Nordeste,3,1156.66,385.55333333333334,3,0.0,4.0,447,0,Inativos / Baixo Engajamento
+115,115,Reparos Já 115,PJ,Nordeste,1,391.65,391.65,1,0.0,5.0,804,0,Inativos / Baixo Engajamento
+116,116,Débora Carvalho,PF,Sul,3,1598.81,799.405,3,0.0,4.0,226,1,Clientes Fiéis / Alto Valor
+117,117,Maria Souza,PF,Sudeste,2,270.12,270.12,2,0.0,4.171703703703703,540,0,Inativos / Baixo Engajamento
+118,118,Eduardo Vieira,PF,Sul,2,610.29,305.145,2,0.5,3.0,1482,0,Inativos / Baixo Engajamento
+119,119,Eduardo Cardoso,PF,Sul,2,788.68,394.34,2,0.0,4.0,1129,0,Inativos / Baixo Engajamento
+120,120,Vanessa Freitas,PF,Sudeste,1,571.8,571.8,1,0.0,5.0,1258,0,Inativos / Baixo Engajamento
+121,121,André Martins,PF,Nordeste,4,1722.02,574.0066666666667,4,0.0,4.5,281,1,Clientes Fiéis / Alto Valor
+122,122,Rodrigo Ribeiro,PF,Sudeste,5,3082.61,616.522,4,0.2,4.25,847,1,Clientes Fiéis / Alto Valor
+123,123,André Martins,PF,Nordeste,4,1819.08,606.36,4,0.25,4.5,508,1,Clientes Fiéis / Alto Valor
+124,124,Soluções Rápidas 124,PJ,Sudeste,1,872.12,872.12,1,0.0,4.171703703703703,1669,0,Inativos / Baixo Engajamento
+126,126,Gustavo Duarte,PF,Sudeste,3,660.5,220.16666666666666,3,0.3333333333333333,4.5,773,0,Inativos / Baixo Engajamento
+127,127,André Lima,PF,Nordeste,2,979.79,489.895,2,0.5,4.171703703703703,177,0,Inativos / Baixo Engajamento
+128,128,Juliana Almeida,PF,Norte,1,282.53,282.53,1,1.0,4.171703703703703,1046,0,Inativos / Baixo Engajamento
+130,130,Pedro Freitas,PF,Nordeste,2,815.27,407.635,2,0.0,4.5,184,0,Inativos / Baixo Engajamento
+132,132,Reparos Já 132,PJ,Nordeste,4,2273.31,568.3275,4,0.0,3.5,472,1,Clientes Fiéis / Alto Valor
+133,133,Rafael Rodrigues,PF,Nordeste,4,1614.72,403.68,4,0.0,4.0,740,1,Clientes Fiéis / Alto Valor
+134,134,Carla Barbosa,PF,Sudeste,5,1389.39,347.3475,5,0.2,3.0,415,1,Clientes Fiéis / Alto Valor
+135,135,Tatiane Dias,PF,Nordeste,4,2251.11,562.7775,4,0.25,4.5,533,1,Clientes Fiéis / Alto Valor
+136,136,Maria Lima,PF,Nordeste,2,870.09,435.045,2,0.5,5.0,795,0,Inativos / Baixo Engajamento
+137,137,Bruno Rodrigues,PF,Nordeste,4,2394.22,598.555,4,0.25,4.0,615,1,Clientes Fiéis / Alto Valor
+138,138,Tatiane Pereira,PF,Nordeste,3,1880.28,626.76,3,0.3333333333333333,4.0,553,1,Clientes Fiéis / Alto Valor
+139,139,Pedro Santos,PF,Nordeste,3,2162.72,720.9066666666666,3,0.0,5.0,300,1,Clientes Fiéis / Alto Valor
+140,140,Vanessa Barbosa,PF,Sudeste,2,294.88,147.44,2,0.5,5.0,405,0,Inativos / Baixo Engajamento
+141,141,Michele Campos,PF,Sul,3,2207.02,735.6733333333333,3,0.3333333333333333,4.0,167,1,Clientes Fiéis / Alto Valor
+142,142,Thiago Rocha,PF,Norte,3,1069.86,356.62,3,0.3333333333333333,5.0,1550,0,Inativos / Baixo Engajamento
+144,144,Ana Souza,PF,Norte,5,2248.88,562.22,5,0.0,4.5,138,1,Clientes Fiéis / Alto Valor
+145,145,Fabiana Souza,PF,Sudeste,2,1212.23,606.115,2,0.0,5.0,299,0,Inativos / Baixo Engajamento
+146,146,Alex Gomes,PF,Nordeste,2,598.14,299.07,2,0.0,4.0,674,0,Inativos / Baixo Engajamento
+147,147,Juliana Rocha,PF,Sul,1,642.59,642.59,1,0.0,5.0,1112,0,Inativos / Baixo Engajamento
+148,148,Simone Cardoso,PF,Centro-Oeste,2,1377.26,688.63,2,0.0,5.0,1196,0,Inativos / Baixo Engajamento
+149,149,Multi Serviços 149,PJ,Sudeste,3,2226.64,742.2133333333334,3,0.0,3.6666666666666665,187,1,Clientes Fiéis / Alto Valor
+150,150,Felipe Duarte,PF,Sudeste,2,743.34,371.67,2,0.0,4.0,850,0,Inativos / Baixo Engajamento
+151,151,Rogério Dias,PF,Sul,5,3114.3,622.86,5,0.4,4.0,290,1,Clientes Fiéis / Alto Valor
+152,152,Simone Oliveira,PF,Sudeste,2,278.85,278.85,2,0.0,4.0,1029,0,Inativos / Baixo Engajamento
+153,153,Maria Moreira,PF,Nordeste,1,382.78,382.78,1,0.0,2.0,1460,0,Inativos / Baixo Engajamento
+154,154,Thiago Rodrigues,PF,Sudeste,1,669.22,669.22,1,0.0,4.171703703703703,1513,0,Inativos / Baixo Engajamento
+155,155,André Costa,PF,Sul,2,1279.0,639.5,2,0.5,4.171703703703703,384,0,Inativos / Baixo Engajamento
+156,156,João Dias,PF,Nordeste,1,958.92,958.92,1,1.0,4.171703703703703,859,0,Inativos / Baixo Engajamento
+157,157,Rodrigo Vieira,PF,Sul,6,3369.29,561.5483333333333,6,0.0,2.5,161,1,Clientes Fiéis / Alto Valor
+158,158,Fernanda Moreira,PF,Nordeste,5,2603.21,650.8025,4,0.2,5.0,218,1,Clientes Fiéis / Alto Valor
+159,159,Cristina Moreira,PF,Sudeste,3,1768.48,589.4933333333333,3,0.3333333333333333,5.0,254,1,Clientes Fiéis / Alto Valor
+160,160,Douglas Cardoso,PF,Nordeste,1,237.13,237.13,1,1.0,4.171703703703703,1301,0,Inativos / Baixo Engajamento
+161,161,Patrícia Araújo,PF,Centro-Oeste,4,1849.05,616.35,4,0.0,4.5,179,1,Clientes Fiéis / Alto Valor
+162,162,Fernanda Lima,PF,Centro-Oeste,3,1598.14,532.7133333333334,3,0.0,4.5,540,1,Clientes Fiéis / Alto Valor
+163,163,Douglas Pereira,PF,Sul,4,1067.32,266.83,4,0.5,3.0,176,1,Clientes Fiéis / Alto Valor
+164,164,Márcio Duarte,PF,Nordeste,2,1430.08,715.04,2,0.0,4.171703703703703,1462,0,Inativos / Baixo Engajamento
+165,165,Vinícius Machado,PF,Nordeste,5,2496.15,499.23,5,0.0,4.4,203,1,Clientes Fiéis / Alto Valor
+166,166,Lucas Campos,PF,Nordeste,3,2069.42,689.8066666666666,3,0.0,4.0,1188,0,Inativos / Baixo Engajamento
+167,167,Douglas Nascimento,PF,Sudeste,3,1372.75,457.5833333333333,3,0.3333333333333333,4.171703703703703,180,1,Clientes Fiéis / Alto Valor
+168,168,Felipe Dias,PF,Centro-Oeste,1,765.7,765.7,1,0.0,4.0,826,0,Inativos / Baixo Engajamento
+169,169,Tatiane Cavalcanti,PF,Centro-Oeste,1,740.1,740.1,1,0.0,3.0,1373,0,Inativos / Baixo Engajamento
+170,170,Thiago Nascimento,PF,Nordeste,4,1023.24,341.08,4,0.25,4.5,312,1,Clientes Fiéis / Alto Valor
+171,171,Márcio Souza,PF,Norte,3,187.31,93.655,3,0.0,4.5,292,0,Inativos / Baixo Engajamento
+172,172,Fernanda Cavalcanti,PF,Nordeste,4,1458.7,486.23333333333335,4,0.0,5.0,910,1,Clientes Fiéis / Alto Valor
+173,173,Rodrigo Araújo,PF,Nordeste,5,3779.76,755.952,5,0.0,4.171703703703703,504,1,Clientes Fiéis / Alto Valor
+174,174,Pedro Duarte,PF,Nordeste,2,964.14,964.14,2,0.0,3.0,1302,0,Inativos / Baixo Engajamento
+175,175,Soluções Rápidas 175,PJ,Centro-Oeste,3,664.81,221.60333333333332,3,0.0,2.5,495,0,Inativos / Baixo Engajamento
+176,176,Diego Silva,PF,Sul,5,1731.77,432.9425,4,0.0,3.6666666666666665,417,1,Clientes Fiéis / Alto Valor
+177,177,Maria Rocha,PF,Nordeste,5,1620.89,405.2225,5,0.2,5.0,238,1,Clientes Fiéis / Alto Valor
+178,178,Ponto Certo 178,PJ,Sudeste,5,1589.22,317.844,5,0.4,3.5,514,1,Clientes Fiéis / Alto Valor
+179,179,Sandra Souza,PF,Sudeste,2,1205.34,602.67,2,0.0,4.5,681,0,Inativos / Baixo Engajamento
+180,180,Beatriz Ribeiro,PF,Sudeste,1,235.29,235.29,1,0.0,4.0,1406,0,Inativos / Baixo Engajamento
+181,181,Diego Freitas,PF,Sudeste,3,1128.52,376.17333333333335,3,0.6666666666666666,5.0,433,0,Inativos / Baixo Engajamento
+182,182,Carla Vieira,PF,Sul,4,2238.09,559.5225,4,0.25,4.666666666666667,185,1,Clientes Fiéis / Alto Valor
+183,183,Eduardo Nascimento,PF,Sudeste,3,1934.06,644.6866666666666,3,0.0,2.0,826,1,Clientes Fiéis / Alto Valor
+184,184,Larissa Pereira,PF,Sul,1,958.77,958.77,1,1.0,4.171703703703703,1062,0,Inativos / Baixo Engajamento
+185,185,Obra Fácil 185,PJ,Nordeste,2,1478.27,739.135,2,0.0,4.0,126,0,Inativos / Baixo Engajamento
+186,186,Simone Martins,PF,Nordeste,4,1732.91,433.2275,4,0.0,4.0,564,1,Clientes Fiéis / Alto Valor
+187,187,Serviços Express 187,PJ,Nordeste,3,1289.81,429.93666666666667,3,0.0,5.0,173,1,Clientes Fiéis / Alto Valor
+188,188,Pedro Nascimento,PF,Sudeste,3,995.68,331.8933333333333,3,0.3333333333333333,5.0,1222,0,Inativos / Baixo Engajamento
+189,189,Vanessa Farias,PF,Sudeste,1,0.0,0.0,1,0.0,4.171703703703703,605,0,Inativos / Baixo Engajamento
+190,190,André Souza,PF,Sul,1,690.81,690.81,1,0.0,5.0,1144,0,Inativos / Baixo Engajamento
+191,191,Eduardo Castro,PF,Centro-Oeste,1,378.58,378.58,1,0.0,4.0,1570,0,Inativos / Baixo Engajamento
+192,192,Reparos Já 192,PJ,Sul,4,2643.18,660.795,4,0.25,4.0,762,1,Clientes Fiéis / Alto Valor
+193,193,Débora Castro,PF,Sudeste,1,0.0,0.0,1,0.0,4.171703703703703,220,0,Inativos / Baixo Engajamento
+194,194,Priscila Lima,PF,Nordeste,4,2751.78,687.945,3,0.5,3.5,438,1,Clientes Fiéis / Alto Valor
+195,195,Bruno Moreira,PF,Sudeste,3,1297.75,648.875,3,0.0,5.0,340,1,Clientes Fiéis / Alto Valor
+196,196,André Ribeiro,PF,Norte,2,280.59,140.295,2,0.5,5.0,708,0,Inativos / Baixo Engajamento
+198,198,Camila Lima,PF,Nordeste,4,2016.88,504.22,4,0.25,3.3333333333333335,358,1,Clientes Fiéis / Alto Valor
+199,199,Diego Rocha,PF,Sul,2,1883.83,941.915,2,0.5,5.0,737,0,Inativos / Baixo Engajamento
+200,200,Márcio Lima,PF,Sul,5,1719.6,343.92,5,0.0,4.25,339,1,Clientes Fiéis / Alto Valor
+202,202,Confiança Total 202,PJ,Sudeste,1,866.86,866.86,1,0.0,4.171703703703703,234,0,Inativos / Baixo Engajamento
+203,203,Ana Rodrigues,PF,Nordeste,4,2088.58,522.145,4,0.0,3.6666666666666665,179,1,Clientes Fiéis / Alto Valor
+204,204,Juliana Duarte,PF,Sudeste,7,5005.05,715.0071428571429,7,0.2857142857142857,4.25,544,1,Clientes Fiéis / Alto Valor
+205,205,Maria Rodrigues,PF,Centro-Oeste,2,1296.82,648.41,2,0.0,5.0,1074,0,Inativos / Baixo Engajamento
+206,206,Mão na Massa 206,PJ,Sul,1,96.94,96.94,1,0.0,4.171703703703703,391,0,Inativos / Baixo Engajamento
+207,207,Leonardo Santos,PF,Norte,1,581.31,581.31,1,1.0,4.171703703703703,1085,0,Inativos / Baixo Engajamento
+208,208,Márcio Freitas,PF,Sudeste,2,323.49,323.49,2,0.0,5.0,1348,0,Inativos / Baixo Engajamento
+209,209,Leonardo Cardoso,PF,Sudeste,3,271.74,271.74,3,0.0,4.171703703703703,551,0,Inativos / Baixo Engajamento
+210,210,Rafael Machado,PF,Centro-Oeste,1,437.78,437.78,1,0.0,4.171703703703703,617,0,Inativos / Baixo Engajamento
+211,211,Cristina Pereira,PF,Sudeste,2,1115.78,557.89,2,0.0,4.0,375,0,Inativos / Baixo Engajamento
+212,212,Márcio Costa,PF,Sudeste,3,1623.55,541.1833333333333,2,0.0,3.0,1430,0,Inativos / Baixo Engajamento
+213,213,Camila Gomes,PF,Sul,3,2177.86,725.9533333333334,3,0.3333333333333333,4.5,157,1,Clientes Fiéis / Alto Valor
+214,214,Leonardo Teixeira,PF,Nordeste,2,1402.33,701.165,2,0.0,5.0,233,0,Inativos / Baixo Engajamento
+215,215,Márcio Santos,PF,Centro-Oeste,1,812.14,812.14,1,1.0,4.171703703703703,1203,0,Inativos / Baixo Engajamento
+216,216,Douglas Duarte,PF,Centro-Oeste,1,290.46,290.46,1,0.0,5.0,835,0,Inativos / Baixo Engajamento
+217,217,Alex Cavalcanti,PF,Nordeste,3,633.42,316.71,2,0.0,4.171703703703703,305,0,Inativos / Baixo Engajamento
+218,218,Patrícia Moreira,PF,Sul,1,169.47,169.47,1,0.0,5.0,445,0,Inativos / Baixo Engajamento
+219,219,João Silva,PF,Sudeste,2,985.07,492.535,2,0.0,4.0,1166,0,Inativos / Baixo Engajamento
+220,220,Leonardo Araújo,PF,Sul,3,1024.23,341.41,3,0.6666666666666666,4.171703703703703,217,0,Inativos / Baixo Engajamento
+221,221,Leonardo Vieira,PF,Centro-Oeste,7,3623.58,603.93,6,0.0,4.666666666666667,609,1,Clientes Fiéis / Alto Valor
+222,222,Aline Almeida,PF,Sudeste,5,3023.98,604.796,5,0.2,4.25,216,1,Clientes Fiéis / Alto Valor
+223,223,Vinícius Dias,PF,Sudeste,3,1555.96,518.6533333333333,3,0.3333333333333333,3.0,639,1,Clientes Fiéis / Alto Valor
+224,224,Juliana Ribeiro,PF,Nordeste,4,2472.74,618.185,4,0.0,4.25,251,1,Clientes Fiéis / Alto Valor
+225,225,Simone Barbosa,PF,Sudeste,4,2065.14,516.285,4,0.5,3.0,302,1,Clientes Fiéis / Alto Valor
+226,226,Fernanda Castro,PF,Sul,3,1225.49,612.745,3,0.0,5.0,598,0,Inativos / Baixo Engajamento
+227,227,Márcio Duarte,PF,Sudeste,4,1683.29,420.8225,4,0.0,3.75,247,1,Clientes Fiéis / Alto Valor
+228,228,Rodrigo Ribeiro,PF,Norte,3,2064.6,688.2,3,0.6666666666666666,4.0,698,1,Clientes Fiéis / Alto Valor
+229,229,Sandra Cavalcanti,PF,Nordeste,3,1220.78,406.9266666666667,3,0.0,4.0,187,1,Clientes Fiéis / Alto Valor
+230,230,Gustavo Araújo,PF,Nordeste,1,855.8,855.8,1,0.0,5.0,1449,0,Inativos / Baixo Engajamento
+231,231,Rogério Cavalcanti,PF,Sul,2,1503.13,751.565,2,0.0,3.0,134,0,Inativos / Baixo Engajamento
+232,232,Mão na Massa 232,PJ,Nordeste,3,1985.91,661.97,3,0.0,3.0,330,1,Clientes Fiéis / Alto Valor
+234,234,Ponto Certo 234,PJ,Sudeste,6,2473.35,494.67,5,0.0,4.0,207,1,Clientes Fiéis / Alto Valor
+235,235,Alex Araújo,PF,Nordeste,6,3720.47,620.0783333333334,6,0.16666666666666666,4.0,259,1,Clientes Fiéis / Alto Valor
+236,236,Eduardo Nascimento,PF,Centro-Oeste,3,1793.35,597.7833333333333,3,0.0,4.0,1245,0,Inativos / Baixo Engajamento
+237,237,Cristina Campos,PF,Sudeste,7,4043.34,673.89,7,0.42857142857142855,4.666666666666667,236,1,Clientes Fiéis / Alto Valor
+238,238,Bruno Rocha,PF,Sudeste,3,1618.22,539.4066666666666,3,0.3333333333333333,5.0,455,1,Clientes Fiéis / Alto Valor
+240,240,Lucas Duarte,PF,Sudeste,1,0.0,0.0,1,0.0,4.171703703703703,1326,0,Inativos / Baixo Engajamento
+241,241,Gustavo Gomes,PF,Centro-Oeste,2,1644.8,822.4,2,0.0,4.0,395,0,Inativos / Baixo Engajamento
+242,242,João Pereira,PF,Sudeste,8,5079.68,725.6685714285715,7,0.125,3.0,537,1,Clientes Fiéis / Alto Valor
+243,243,Multi Serviços 243,PJ,Centro-Oeste,1,455.54,455.54,1,0.0,5.0,1384,0,Inativos / Baixo Engajamento
+244,244,Michele Dias,PF,Norte,5,2416.28,604.07,5,0.2,4.0,150,1,Clientes Fiéis / Alto Valor
+245,245,Bruno Vieira,PF,Sul,2,166.71,166.71,2,0.0,4.171703703703703,627,0,Inativos / Baixo Engajamento
+247,247,Gustavo Campos,PF,Nordeste,4,1865.26,621.7533333333333,4,0.0,5.0,492,1,Clientes Fiéis / Alto Valor
+248,248,Aline Silva,PF,Sudeste,5,2562.02,512.404,5,0.0,3.6666666666666665,335,1,Clientes Fiéis / Alto Valor
+249,249,Tatiane Lima,PF,Norte,4,837.78,209.445,4,0.25,5.0,212,1,Clientes Fiéis / Alto Valor
+250,250,Obra Fácil 250,PJ,Sudeste,2,798.17,399.085,2,0.0,3.0,400,0,Inativos / Baixo Engajamento
+251,251,Lucas Campos,PF,Sudeste,2,882.71,441.355,2,0.0,4.0,1169,0,Inativos / Baixo Engajamento
+252,252,Michele Campos,PF,Sul,2,942.99,471.495,2,0.0,4.5,262,0,Inativos / Baixo Engajamento
+253,253,Rogério Silva,PF,Nordeste,2,1024.75,512.375,2,0.0,5.0,426,0,Inativos / Baixo Engajamento
+254,254,Wesley Silva,PF,Sudeste,4,2267.87,566.9675,4,0.0,5.0,162,1,Clientes Fiéis / Alto Valor
+255,255,Simone Farias,PF,Sudeste,6,3592.77,598.795,6,0.3333333333333333,3.6666666666666665,270,1,Clientes Fiéis / Alto Valor
+256,256,Maria Carvalho,PF,Sudeste,4,3326.78,831.695,4,0.25,4.0,289,1,Clientes Fiéis / Alto Valor
+257,257,Ponto Certo 257,PJ,Nordeste,5,2346.0,469.2,5,0.4,4.0,664,1,Clientes Fiéis / Alto Valor
+258,258,Beatriz Gomes,PF,Nordeste,1,140.78,140.78,1,0.0,5.0,1386,0,Inativos / Baixo Engajamento
+259,259,Casa & Cia 259,PJ,Sudeste,5,2077.25,415.45,5,0.2,4.333333333333333,146,1,Clientes Fiéis / Alto Valor
+261,261,Priscila Dias,PF,Sudeste,3,1534.34,511.44666666666666,3,0.3333333333333333,4.5,384,1,Clientes Fiéis / Alto Valor
+262,262,Bruno Lima,PF,Nordeste,2,1230.63,615.315,2,0.0,4.5,1280,0,Inativos / Baixo Engajamento
+263,263,Rogério Correia,PF,Sul,2,1008.55,504.275,2,0.5,5.0,868,0,Inativos / Baixo Engajamento
+264,264,André Castro,PF,Sul,4,1303.5,325.875,4,0.0,4.0,127,1,Clientes Fiéis / Alto Valor
+265,265,Débora Correia,PF,Nordeste,4,1937.38,484.345,4,0.25,5.0,881,1,Clientes Fiéis / Alto Valor
+266,266,Alex Costa,PF,Nordeste,3,1472.89,490.9633333333333,3,0.3333333333333333,4.0,412,1,Clientes Fiéis / Alto Valor
+267,267,Fabiana Costa,PF,Sul,1,951.89,951.89,1,0.0,4.0,324,0,Inativos / Baixo Engajamento
+268,268,Douglas Ribeiro,PF,Sul,1,439.65,439.65,1,0.0,5.0,1031,0,Inativos / Baixo Engajamento
+269,269,Diego Rocha,PF,Sudeste,2,191.47,191.47,2,0.5,4.171703703703703,1093,0,Inativos / Baixo Engajamento
+270,270,Alex Souza,PF,Sudeste,2,1203.73,601.865,2,0.0,5.0,707,0,Inativos / Baixo Engajamento
+272,272,Ana Dias,PF,Sudeste,3,1553.48,517.8266666666667,3,0.3333333333333333,4.0,536,1,Clientes Fiéis / Alto Valor
+273,273,Leonardo Freitas,PF,Nordeste,2,1332.18,666.09,2,0.0,3.0,898,0,Inativos / Baixo Engajamento
+274,274,João Castro,PF,Sul,3,2107.92,702.64,3,0.3333333333333333,4.0,1491,0,Inativos / Baixo Engajamento
+275,275,André Campos,PF,Nordeste,1,271.41,271.41,1,0.0,5.0,1374,0,Inativos / Baixo Engajamento
+276,276,Vanessa Oliveira,PF,Sudeste,2,209.77,209.77,2,0.0,5.0,943,0,Inativos / Baixo Engajamento
+277,277,Vinícius Castro,PF,Sudeste,2,377.85,188.925,2,0.0,5.0,1039,0,Inativos / Baixo Engajamento
+278,278,Felipe Barbosa,PF,Sul,3,991.47,330.49,3,0.3333333333333333,4.171703703703703,415,0,Inativos / Baixo Engajamento
+279,279,Débora Martins,PF,Sudeste,3,1415.11,471.7033333333333,3,0.0,5.0,316,1,Clientes Fiéis / Alto Valor
+280,280,Bruno Barbosa,PF,Nordeste,4,2027.03,506.7575,4,0.25,4.0,386,1,Clientes Fiéis / Alto Valor
+281,281,João Carvalho,PF,Sudeste,8,3925.33,490.66625,7,0.25,4.2,356,1,Clientes Fiéis / Alto Valor
+282,282,Douglas Martins,PF,Centro-Oeste,6,3933.16,655.5266666666666,6,0.0,3.25,345,1,Clientes Fiéis / Alto Valor
+283,283,Wesley Freitas,PF,Sudeste,5,1436.3,359.075,5,0.0,3.3333333333333335,862,1,Clientes Fiéis / Alto Valor
+284,284,Pedro Rodrigues,PF,Nordeste,2,1491.85,745.925,2,0.0,4.0,127,0,Inativos / Baixo Engajamento
+285,285,Eduardo Santos,PF,Sul,1,492.76,492.76,1,1.0,4.171703703703703,1621,0,Inativos / Baixo Engajamento
+286,286,Fabiana Carvalho,PF,Norte,3,94.78,94.78,3,0.0,5.0,727,0,Inativos / Baixo Engajamento
+287,287,Rodrigo Moreira,PF,Sul,1,872.9,872.9,1,0.0,4.0,619,0,Inativos / Baixo Engajamento
+288,288,Maria Barbosa,PF,Sul,3,1612.43,537.4766666666667,3,0.0,4.666666666666667,137,1,Clientes Fiéis / Alto Valor
+289,289,Larissa Santos,PF,Nordeste,1,158.35,158.35,1,0.0,4.171703703703703,458,0,Inativos / Baixo Engajamento
+290,290,Aline Barbosa,PF,Nordeste,6,4482.65,747.1083333333333,6,0.5,4.0,218,1,Clientes Fiéis / Alto Valor
+291,291,Marcos Souza,PF,Nordeste,2,1844.38,922.19,2,0.5,4.0,1247,0,Inativos / Baixo Engajamento
+292,292,Thiago Santos,PF,Norte,2,1393.86,696.93,2,0.0,3.5,1030,0,Inativos / Baixo Engajamento
+293,293,Fernanda Cardoso,PF,Sudeste,4,1828.73,457.1825,3,0.25,3.0,1051,1,Clientes Fiéis / Alto Valor
+294,294,Rogério Correia,PF,Nordeste,3,1249.35,416.45,3,0.0,1.0,436,1,Clientes Fiéis / Alto Valor
+295,295,Larissa Barbosa,PF,Sudeste,3,1800.1,600.0333333333333,3,0.3333333333333333,3.5,807,1,Clientes Fiéis / Alto Valor
+296,296,Aline Machado,PF,Sudeste,3,1752.55,584.1833333333333,3,0.0,3.5,297,1,Clientes Fiéis / Alto Valor
+297,297,Leonardo Oliveira,PF,Sul,2,913.34,456.67,2,0.0,5.0,492,0,Inativos / Baixo Engajamento
+298,298,Leonardo Moreira,PF,Nordeste,3,1572.52,524.1733333333333,2,0.3333333333333333,5.0,649,0,Inativos / Baixo Engajamento
+299,299,Marcos Santos,PF,Sul,1,274.43,274.43,1,0.0,5.0,1048,0,Inativos / Baixo Engajamento
+300,300,André Campos,PF,Sudeste,3,2069.61,689.87,3,0.3333333333333333,4.0,275,1,Clientes Fiéis / Alto Valor

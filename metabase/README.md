@@ -10,7 +10,7 @@ datamarts (`dm_pedidos`, `dm_orcamentos`, `dm_avaliacoes`, `dm_agendamentos`,
 |---|---|
 | `docker-compose.yml` | Sobe o container `metabase_pn10` (porta `3000`), conectado à rede docker `api_default` onde já roda o Postgres do projeto (`postgres_pn10_local`) |
 | `setup_metabase.sh` | Configura o Metabase via API REST: cria o usuário administrador e registra a base `prestadornota10local` como fonte de dados |
-| `views/` | Um script SQL por datamart, com uma view `vw_resumo_*` para cada tabela de resumo (ver seção 4 do [README da raiz](../README.md)) |
+| `views/` | Um script SQL por datamart/assunto analítico, com uma view `vw_*` para cada tabela de resumo ou análise avançada (ver seção 4 do [README da raiz](../README.md)), incluindo `vw_segmentacao_clientes.sql` (resultado da clusterização de clientes — ver seção 5 do README da raiz) |
 
 ## Pré-requisitos
 
@@ -18,6 +18,9 @@ datamarts (`dm_pedidos`, `dm_orcamentos`, `dm_avaliacoes`, `dm_agendamentos`,
 - Postgres do projeto já em execução (container `postgres_pn10_local`,
   `jdbc:postgresql://localhost:5433/prestadornota10local`) e com os schemas
   `dw`/`dm_*` já criados e populados (ver seção 4 do README da raiz).
+- Para a view `vw_segmentacao_clientes` mostrar dados, rode antes
+  `dw/09_segmentacao_clientes_ddl.sql` e `mining/clusterizacao/segmentar_clientes.py`
+  (ver seção 5 do README da raiz) — a view existe mesmo sem isso, só fica vazia.
 
 ## Como executar
 

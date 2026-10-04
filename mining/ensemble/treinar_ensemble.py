@@ -44,7 +44,7 @@ def carregar_dados_dw(db_uri=None):
     if db_uri is None:
         db_uri = os.getenv(
             "DATABASE_URL", 
-            "postgresql://postgres:postgres@localhost:5433/prestadornota10local"
+            "postgresql+psycopg2://postgres:postgres@localhost:5433/prestadornota10local"
         )
     
     try:
