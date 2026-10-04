@@ -95,6 +95,41 @@ maior **Silhouette Score** (ver `mining/clusterizacao/comparativo_k.csv` e
 O resultado é gravado em `dw.dim_cliente_segmento` (Postgres, consumido pela
 etapa 2) e em `mining/clusterizacao/clientes_segmentados.csv`.
 
+### 3.4 Visualização no Metabase
+
+O resultado da clusterização também foi exposto no Metabase (container
+`metabase_pn10`, schema `dw`) através de `metabase/views/vw_segmentacao_clientes.sql`,
+que cria duas views sobre a tabela `dw.dim_cliente_segmento`:
+`dw.vw_segmentacao_clientes` (detalhe por cliente) e
+`dw.vw_resumo_segmento_cliente` (perfil médio por cluster). Capturas de tela
+reais do catálogo de dados e das perguntas montadas sobre essas views:
+
+**a) Catálogo de dados do schema `dw`** — após o `sync_schema`, o Metabase
+passou a listar `Dim Cliente Segmento` (tabela física) e as duas views novas
+(`Vw Resumo Segmento Cliente`, `Vw Segmentacao Clientes`) junto das
+dimensões/fatos já existentes:
+
+![Schema dw no Metabase com as tabelas de segmentação](clusterizacao/screenshots/01_schema_dw_tabelas.png)
+
+**b) Detalhe por cliente (`vw_segmentacao_clientes`)** — 277 linhas, uma por
+cliente, com o cluster/rótulo de segmento atribuído e as features RFM
+usadas no K-Means (consulta livre no Metabase, sem necessidade de refazer o
+join manualmente):
+
+![Vw Segmentacao Clientes - detalhe por cliente](clusterizacao/screenshots/02_vw_segmentacao_clientes.png)
+
+**c) Resumo por cluster (`vw_resumo_segmento_cliente`)** — perfil médio de
+cada um dos 2 clusters encontrados, pronto para um card de dashboard:
+
+![Vw Resumo Segmento Cliente - perfil por cluster](clusterizacao/screenshots/03_vw_resumo_segmento_cliente_tabela.png)
+
+**d) Gráfico de barras (Contagem de clientes por segmento)** — montado no
+próprio Metabase (botão "Resumir" → Contagem → Agrupar por "Rotulo
+Segmento"), confirmando visualmente a distribuição 154 × 123 clientes entre
+os dois segmentos:
+
+![Contagem de clientes por segmento - gráfico de barras](clusterizacao/screenshots/04_grafico_clientes_por_segmento.png)
+
 ## 4. Etapa 2 — Regras de Associação por segmento (`mining/associacao/`)
 
 ### 4.1 Definição de "cesta de compras" e "produto"
