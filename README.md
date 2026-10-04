@@ -282,6 +282,11 @@ O diretório [`metabase/`](metabase) sobe um container do Metabase (via `docker 
 - **Windows (PowerShell)**: `.\metabase\setup_metabase.ps1`
 - **Linux/macOS (Bash)**: `./metabase/setup_metabase.sh`
 - Acesse **http://localhost:3000** (Login: `admin@pn10.local` / `Pn10Metabase!2026`).
+- `metabase/views/vw_segmentacao_clientes.sql` expõe `dw.vw_segmentacao_clientes`
+  (1 linha por cliente segmentado) e `dw.vw_resumo_segmento_cliente` (perfil médio
+  por cluster) — populadas após rodar a clusterização da seção 5.1. Após criar a
+  view/popular a tabela, force uma sincronização de schema (ver
+  [`metabase/README.md`](metabase/README.md#re-sincronizar-o-schema)).
 
 ---
 
