@@ -54,6 +54,26 @@ orcamento_pedido/historico_situacao_pedido/agendamento/avaliacao_pedido/
 plano/categoria_servico_prestador`), para que a API e o DW fiquem
 sincronizados — ver `01_oltp_ddl.sql` e `02_oltp_carga.sql` na seção 4.
 
+### Protótipo da aplicação (capturas de tela)
+
+O protótipo do aplicativo (`prototipo-pn10/`, apps **cliente** e
+**prestador**) ilustra, na prática, as entidades e o fluxo de situações
+descritos acima:
+
+| | |
+|---|---|
+| ![Tela inicial do app PN10](<prototipo-pn10/pn10-cliente/Simulator Screenshot - iPhone 14 Pro Max - 2024-01-18 at 21.31.44.png>) | ![Tela Serviços - categorias e subcategorias](<prototipo-pn10/pn10-cliente/Simulator Screenshot - iPhone 14 Pro Max - 2024-01-18 at 21.42.22.png>) |
+| **App Cliente — tela inicial.** Branding do PN10. | **App Cliente — aba "Serviços".** Mostra a hierarquia categoria → subcategoria de `categoria_servico` na prática: setores (`Automotivo`/`Residencial`) e, dentro deles, serviços (`Acessibilidade`/`Assistência técnica`). |
+| ![Tela Pedidos com filtro de status](<prototipo-pn10/pn10-cliente/Simulator Screenshot - iPhone 14 Pro Max - 2024-01-18 at 21.42.59.png>) | ![Tela de cadastro de categorias e precificação do prestador](<prototipo-pn10/pn10-prestador/Simulator Screenshot - iPhone 14 Pro Max - 2024-01-18 at 21.20.09.png>) |
+| **App Cliente — aba "Pedidos".** Os filtros `Abertos`/`Confirmados`/`Finalizados`/`Cancelados` correspondem diretamente aos valores da dimensão `dim_situacao_pedido` (enum `SituacaoPedido`) usada em `dw.fato_pedido`. | **App Prestador — cadastro de categoria/preço.** Cada categoria de atuação do prestador tem um valor associado (ex.: `Antivírus`, `Instalação de software`) — é a tela de origem de `categoria_servico_prestador`/`dw.fato_precificacao_categoria`. |
+
+![Wireframe do fluxo de Pedido Fixo (cliente)](<prototipo-pn10/Prototipo do fluxo completo.png>)
+
+**Fluxo "Pedido Fixo" (preço fechado).** Wireframe do fluxo alternativo de
+solicitação com preço já fechado, citado na seção 1 e na seção 6 como
+**fora do escopo deste DW** — states como `pedido_fixo`/`convite_pedido_fixo`
+não têm dimensão/fato correspondente hoje.
+
 ## 2. Arquitetura do DW
 
 O pipeline segue três camadas, nesta ordem:
